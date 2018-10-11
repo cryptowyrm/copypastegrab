@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Copy Paste Grab
+GenericName=Video downloader
+Comment=A shell wrapper for youtube-dl that downloads videos from websites
+Categories=Utility;Internet;
+Exec=com.github.cryptowyrm.copypastegrab
+Icon=application-default-icon
+Terminal=false
+Type=Application
+Keywords=Hello;World;Example;

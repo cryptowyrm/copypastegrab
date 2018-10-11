@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2018 CryptoWyrm <cryptowyrm@protonmail.ch> -->
+<component type="desktop">
+  <id>com.github.cryptowyrm.copypastegrab</id>
+  <metadata_license>GPL</metadata_license>
+  <name>Copy Paste Grab</name>
+  <summary>Download videos from hundreds of websites</summary>
+  <description>
+    <p>Copy Paste Grab is a shell wrapper (a graphical user interface) for the popular youtube-dl command line tool.</p>
+    <p>It allows you to download videos from hundreds of websites, and optionally convert the video files, for example to extract only the audio portion and save it as MP3 or AAC.</p>
+  </description>
+  <custom>
+    <value key="x-appcenter-color-primary">#603461</value>
+    <value key="x-appcenter-color-primary-text">rgb(255, 255, 255)</value>
+    <value key="x-appcenter-suggested-price">5</value>
+  </custom>
+</component>
