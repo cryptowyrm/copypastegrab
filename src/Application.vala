@@ -61,7 +61,8 @@ public class MyApp : Gtk.Application {
         label = new Gtk.Label ("URL:");
 
         scrolled = new Gtk.ScrolledWindow (null, null);
-        scrolled.min_content_height = 300;
+        scrolled.expand = true;
+        scrolled.shadow_type = Gtk.ShadowType.IN;
         view = new Gtk.TextView ();
         scrolled.add (view);
 
