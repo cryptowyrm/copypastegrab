@@ -27,6 +27,7 @@ public class MyApp : Gtk.Application {
     Gtk.ScrolledWindow scrolled;
     Gtk.TextView view;
     Gtk.HeaderBar header;
+    Gtk.ProgressBar progress_bar;
 
     public MyApp () {
         Object (
@@ -59,6 +60,10 @@ public class MyApp : Gtk.Application {
         button = new Gtk.Button.with_label ("Download");
         entry = new Gtk.Entry ();
         label = new Gtk.Label ("URL:");
+        progress_bar = new Gtk.ProgressBar ();
+        //progress_bar.height_request = 40;
+        progress_bar.text = "Download progress";
+        progress_bar.show_text = true;
 
         scrolled = new Gtk.ScrolledWindow (null, null);
         scrolled.expand = true;
@@ -69,6 +74,7 @@ public class MyApp : Gtk.Application {
         topbar.add (label);
         topbar.add (entry);
         topbar.add (button);
+        topbar.add (progress_bar);
 
         layout.add (topbar);
         layout.add (scrolled);
@@ -84,7 +90,30 @@ public class MyApp : Gtk.Application {
             shell_command(entry.get_text());
         });
 
+        parse_progress("[Download] 2.0%");
+
         main_window.show_all ();
+    }
+
+    private void parse_progress(string line) {
+        //[download] 100.0% of 54.17MiB at  5.45MiB/s ETA 00:00
+        //[download] 100% of 54.17MiB in 00:10
+        if (line.length == 0) {
+            return;
+        }
+
+        string[] tokens = line.split_set (" ");
+
+        if (tokens.length == 0) {
+            return;
+        }
+
+        if (tokens[0] == "[download]") {
+            double progress = 0.0;
+            // float is %f but double is %lf
+            line.scanf ("[download] %lf", &progress);
+            progress_bar.set_fraction (progress / 100.0);
+        }
     }
 
     private bool process_line (IOChannel channel, IOCondition condition, string stream_name) {
@@ -98,6 +127,7 @@ public class MyApp : Gtk.Application {
             channel.read_line (out line, null, null);
             print ("%s: %s", stream_name, line);
             view.buffer.text += line;
+            parse_progress (line);
         } catch (IOChannelError e) {
             print ("%s: IOChannelError: %s\n", stream_name, e.message);
             return false;
