@@ -26,6 +26,7 @@ public class MyApp : Gtk.Application {
     Gtk.Label label;
     Gtk.ScrolledWindow scrolled;
     Gtk.TextView view;
+    Gtk.HeaderBar header;
 
     public MyApp () {
         Object (
@@ -35,9 +36,13 @@ public class MyApp : Gtk.Application {
     }
 
     protected override void activate () {
+        header = new Gtk.HeaderBar ();
+        header.set_show_close_button (true);
+
         var main_window = new Gtk.ApplicationWindow (this);
-        main_window.default_height = 300;
-        main_window.default_width = 400;
+        main_window.set_titlebar (header);
+        main_window.default_height = 250;
+        main_window.default_width = 500;
         main_window.title = "Copy Paste Grab";
 
         var layout = new Gtk.Grid ();
@@ -68,6 +73,8 @@ public class MyApp : Gtk.Application {
         layout.add (scrolled);
 
         main_window.add (layout);
+
+        main_window.destroy.connect (Gtk.main_quit);
 
         button.clicked.connect (() => {
             label.label = ("Hello, world!");
