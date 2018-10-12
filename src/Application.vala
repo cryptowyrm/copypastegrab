@@ -75,7 +75,8 @@ public class MyApp : Gtk.Application {
 
         main_window.add (layout);
 
-        main_window.destroy.connect (Gtk.main_quit);
+        //main_window.destroy.connect (Gtk.main_quit);
+        // shows error so probably not needed when using ApplicationWindow
 
         button.clicked.connect (() => {
             label.label = ("Hello, world!");
