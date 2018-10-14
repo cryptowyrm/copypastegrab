@@ -11,6 +11,6 @@ Standards-Version: 4.1.1
 
 Package: com.github.cryptowyrm.copypastegrab
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}
+Depends: ${misc:Depends}, ${shlibs:Depends}, youtube-dl
 Description: Copy Paste Grab
  Download videos from hundreds of websites.
