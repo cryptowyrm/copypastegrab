@@ -5,6 +5,7 @@ project('com.github.cryptowyrm.copypastegrab', 'vala', 'c')
 executable(
     meson.project_name(),
     'src/Application.vala',
+    'src/DownloadRow.vala',
     dependencies: [
         dependency('gtk+-3.0')
     ],
