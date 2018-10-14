@@ -25,18 +25,18 @@ namespace CopyPasteGrab {
 		public signal void download_finished();
 
 		public string video_url = null;
+		public bool is_downloading = false;
 
 		public Gtk.Grid layout;
 		public Gtk.ProgressBar progress_bar;
 		Gtk.Label label;
-		Gtk.Button cancel_button;
+		Gtk.Button start_button;
 
 		public DownloadRow(string video_url) {
 			this.video_url = video_url;
 
 			progress_bar = new Gtk.ProgressBar ();
-	        progress_bar.text = "Download progress";
-	        progress_bar.show_text = true;
+			progress_bar.show_text = false;
 
 	        label = new Gtk.Label (video_url);
 	        label.hexpand = true;
@@ -48,14 +48,31 @@ namespace CopyPasteGrab {
 	        layout.column_spacing = 10;
 	        layout.border_width = 10;
 
-	        cancel_button = new Gtk.Button.with_label ("Cancel");
+	        start_button = new Gtk.Button.with_label ("Start");
 
 	        layout.add (label);
 	        layout.add (progress_bar);
-	        layout.add (cancel_button);
+	        layout.add (start_button);
+
+	        start_button.clicked.connect(() => {
+	        	if(is_downloading) {
+	        		progress_bar.text = "Canceled";
+		        	progress_bar.show_text = true;
+		        	stop();
+        		} else {
+        			progress_bar.text = "Downloading";
+		        	progress_bar.show_text = true;
+		        	start();
+        		}
+	        });
+		}
+
+		public void stop() {
+			is_downloading = false;
 		}
 
 		public void start() {
+			is_downloading = true;
 			shell_command(this.video_url);
 		}
 

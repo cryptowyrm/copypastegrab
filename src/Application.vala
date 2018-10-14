@@ -63,7 +63,7 @@ namespace CopyPasteGrab {
             topbar.row_spacing = 10;
             topbar.column_spacing = 10;
 
-            button = new Gtk.Button.with_label ("Download");
+            button = new Gtk.Button.with_label ("Add");
             entry = new Gtk.Entry ();
             label = new Gtk.Label ("URL:");
             list_box = new Gtk.ListBox ();
@@ -86,16 +86,15 @@ namespace CopyPasteGrab {
             // shows error so probably not needed when using ApplicationWindow
 
             button.clicked.connect (() => {
-                label.label = ("Hello, world!");
-                button.sensitive = false;
+                //button.sensitive = false;
                 DownloadRow download = new DownloadRow (entry.get_text());
+                entry.set_text ("");
                 download.download_finished.connect(() => {
                     print ("Download finished!\n");
                 });
                 downloads.append_val (download);
                 list_box.add (download.layout);
                 list_box.show_all ();
-                download.start();
             });
 
             main_window.show_all ();
