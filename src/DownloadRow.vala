@@ -35,6 +35,7 @@ namespace CopyPasteGrab {
 		}
 		public string video_url = null;
 		public bool is_downloading = false;
+		private Pid child_pid;
 
 		public Gtk.Grid layout;
 		public Gtk.ProgressBar progress_bar;
@@ -63,6 +64,8 @@ namespace CopyPasteGrab {
 	        layout.add (progress_bar);
 	        layout.add (start_button);
 
+	        // TODO: Change button label Start/Stop
+	        // TODO: Continue download with -c
 	        start_button.clicked.connect(() => {
 	        	if(is_downloading) {
 	        		progress_bar.text = "Canceled";
@@ -92,6 +95,8 @@ namespace CopyPasteGrab {
 
 		public void stop() {
 			is_downloading = false;
+			status = DownloadStatus.PAUSED;
+			Posix.kill((int) child_pid, Posix.Signal.KILL);
 		}
 
 		public void start() {
@@ -136,7 +141,9 @@ namespace CopyPasteGrab {
         private bool process_line (IOChannel channel, IOCondition condition, string stream_name) {
             if (condition == IOCondition.HUP) {
                 print ("%s: The fd has been closed.\n", stream_name);
-                status = DownloadStatus.DONE;
+                if(status != DownloadStatus.PAUSED) {
+                	status = DownloadStatus.DONE;
+                }
                 return false;
             }
 
@@ -163,7 +170,6 @@ namespace CopyPasteGrab {
             try {
                 string[] spawn_args = {"youtube-dl", "--newline", url};
                 string[] spawn_env = Environ.get ();
-                Pid child_pid;
 
                 int standard_input;
                 int standard_output;

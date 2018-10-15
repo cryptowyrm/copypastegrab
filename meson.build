@@ -6,6 +6,9 @@ executable(
     meson.project_name(),
     'src/Application.vala',
     'src/DownloadRow.vala',
+    vala_args: [
+        '--pkg=posix'
+    ],
     dependencies: [
         dependency('gtk+-3.0')
     ],
