@@ -30,6 +30,8 @@ namespace CopyPasteGrab {
         Gtk.HeaderBar header;
         Gtk.Image add_url_icon;
         Gtk.MenuButton add_url_button;
+        Gtk.Image paste_url_icon;
+        Gtk.Button paste_url_button;
         Gtk.Popover add_url_popover;
         Gtk.ListBox list_box;
         Array<DownloadRow> downloads;
@@ -51,12 +53,20 @@ namespace CopyPasteGrab {
             add_url_icon.gicon = new ThemedIcon ("insert-link");
             add_url_icon.pixel_size = 24;
 
+            paste_url_icon = new Gtk.Image ();
+            paste_url_icon.gicon = new ThemedIcon ("edit-paste");
+            paste_url_icon.pixel_size = 24;
+
             add_url_button = new Gtk.MenuButton ();
             add_url_button.use_popover = true;
             add_url_button.relief = Gtk.ReliefStyle.NONE;
-            add_url_button.add (add_url_icon);
+            add_url_button.set_image (add_url_icon);
             add_url_popover = new Gtk.Popover (add_url_button);
             add_url_button.popover = add_url_popover;
+
+            paste_url_button = new Gtk.Button ();
+            paste_url_button.relief = Gtk.ReliefStyle.NONE;
+            paste_url_button.set_image (paste_url_icon);
 
             button = new Gtk.Button.with_label ("Add");
             entry = new Gtk.Entry ();
@@ -75,6 +85,7 @@ namespace CopyPasteGrab {
             header = new Gtk.HeaderBar ();
             header.set_show_close_button (true);
             header.pack_start (add_url_button);
+            header.pack_start (paste_url_button);
 
             var main_window = new Gtk.ApplicationWindow (this);
             main_window.set_titlebar (header);
@@ -117,6 +128,10 @@ namespace CopyPasteGrab {
                 downloads.append_val (download);
                 list_box.add (download.layout);
                 list_box.show_all ();
+            });
+
+            paste_url_button.clicked.connect (() => {
+                print ("clicked");
             });
 
             main_window.show_all ();
