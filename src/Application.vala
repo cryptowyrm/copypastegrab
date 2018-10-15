@@ -114,9 +114,6 @@ namespace CopyPasteGrab {
                 //button.sensitive = false;
                 DownloadRow download = new DownloadRow (entry.get_text());
                 entry.set_text ("");
-                download.download_finished.connect(() => {
-                    print ("Download finished!\n");
-                });
                 downloads.append_val (download);
                 list_box.add (download.layout);
                 list_box.show_all ();

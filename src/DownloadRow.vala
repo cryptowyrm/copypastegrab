@@ -20,10 +20,19 @@
 */
 
 namespace CopyPasteGrab {
+	public enum DownloadStatus {
+		INITIAL,
+		FETCHING_URL,
+		DOWNLOADING,
+		CONVERTING,
+		PAUSED,
+		DONE
+	}
 
 	public class DownloadRow : Object {
-		public signal void download_finished();
-
+		public DownloadStatus status {
+			get; private set; default = DownloadStatus.INITIAL;
+		}
 		public string video_url = null;
 		public bool is_downloading = false;
 
@@ -65,6 +74,20 @@ namespace CopyPasteGrab {
 		        	start();
         		}
 	        });
+
+	        this.notify["status"].connect((s, p) => {
+	        	switch (status) {
+	        		case DownloadStatus.DOWNLOADING:
+	        			progress_bar.text = "Downloading";
+	        			break;
+	        		case DownloadStatus.CONVERTING:
+	        			progress_bar.text = "Converting";
+	        			break;
+	        		case DownloadStatus.DONE:
+	        			progress_bar.text = "Completed";
+	        			break;
+	        	}
+	        });
 		}
 
 		public void stop() {
@@ -89,9 +112,23 @@ namespace CopyPasteGrab {
                 return progress;
             }
 
+            switch (tokens[0]) {
+            	case "[download]":
+            		if(status != DownloadStatus.DOWNLOADING) {
+            		status = DownloadStatus.DOWNLOADING;
+	            	}
+	                // float is %f but double is %lf
+	                line.scanf ("[download] %lf", &progress);
+	                break;
+	            case "[ffmpeg]":
+	            	if(status != DownloadStatus.CONVERTING) {
+	            		status = DownloadStatus.CONVERTING;
+	            	}
+	            	break;
+            }
+
             if (tokens[0] == "[download]") {
-                // float is %f but double is %lf
-                line.scanf ("[download] %lf", &progress);
+            	
             }
             return progress;
         }
@@ -99,6 +136,7 @@ namespace CopyPasteGrab {
         private bool process_line (IOChannel channel, IOCondition condition, string stream_name) {
             if (condition == IOCondition.HUP) {
                 print ("%s: The fd has been closed.\n", stream_name);
+                status = DownloadStatus.DONE;
                 return false;
             }
 
@@ -156,7 +194,7 @@ namespace CopyPasteGrab {
                 ChildWatch.add (child_pid, (pid, status) => {
                     // Triggered when the child indicated by child_pid exits
                     Process.close_pid (pid);
-                    download_finished();
+                    status = DownloadStatus.DONE;
                 });
             } catch (SpawnError e) {
                 print ("Error: %s\n", e.message);
