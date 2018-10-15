@@ -34,6 +34,9 @@ namespace CopyPasteGrab {
         Gtk.Button paste_url_button;
         Gtk.Popover add_url_popover;
         Gtk.ListBox list_box;
+
+        Granite.Widgets.AlertView list_placeholder;
+
         Array<DownloadRow> downloads;
 
         //public signal void progress_event (int download_id, double progress);
@@ -100,6 +103,13 @@ namespace CopyPasteGrab {
             layout.border_width = 10;
             
             list_box = new Gtk.ListBox ();
+            list_placeholder = new Granite.Widgets.AlertView (
+                "No downloads",
+                "Use the add url or paste url buttons in the header bar to add a new video download.",
+                "dialog-information"
+            );
+            list_box.set_placeholder (list_placeholder);
+            list_placeholder.show_all();
 
             scrolled = new Gtk.ScrolledWindow (null, null);
             scrolled.expand = true;
