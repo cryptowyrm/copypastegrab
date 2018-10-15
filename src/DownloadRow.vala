@@ -41,9 +41,18 @@ namespace CopyPasteGrab {
 		public Gtk.ProgressBar progress_bar;
 		Gtk.Label label;
 		Gtk.Button start_button;
+		Gtk.Image start_icon;
+		Gtk.Image stop_icon;
 
 		public DownloadRow(string video_url) {
 			this.video_url = video_url;
+
+			start_icon = new Gtk.Image ();
+			start_icon.gicon = new ThemedIcon ("media-playback-start");
+			start_icon.pixel_size = 16;
+			stop_icon = new Gtk.Image ();
+			stop_icon.gicon = new ThemedIcon ("media-playback-stop");
+			stop_icon.pixel_size = 16;
 
 			progress_bar = new Gtk.ProgressBar ();
 			progress_bar.show_text = false;
@@ -58,22 +67,23 @@ namespace CopyPasteGrab {
 	        layout.column_spacing = 10;
 	        layout.border_width = 10;
 
-	        start_button = new Gtk.Button.with_label ("Start");
+	        start_button = new Gtk.Button.from_icon_name ("media-playback-start");
 
 	        layout.add (label);
 	        layout.add (progress_bar);
 	        layout.add (start_button);
 
-	        // TODO: Change button label Start/Stop
 	        // TODO: Continue download with -c
 	        start_button.clicked.connect(() => {
 	        	if(is_downloading) {
 	        		progress_bar.text = "Canceled";
 		        	progress_bar.show_text = true;
+		        	start_button.set_image (start_icon);
 		        	stop();
         		} else {
         			progress_bar.text = "Downloading";
 		        	progress_bar.show_text = true;
+		        	start_button.set_image (stop_icon);
 		        	start();
         		}
 	        });
