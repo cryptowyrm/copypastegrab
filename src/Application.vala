@@ -64,12 +64,14 @@ namespace CopyPasteGrab {
             add_url_button.use_popover = true;
             add_url_button.relief = Gtk.ReliefStyle.NONE;
             add_url_button.set_image (add_url_icon);
+            add_url_button.tooltip_text = "Enter a video URL to download";
             add_url_popover = new Gtk.Popover (add_url_button);
             add_url_button.popover = add_url_popover;
 
             paste_url_button = new Gtk.Button ();
             paste_url_button.relief = Gtk.ReliefStyle.NONE;
             paste_url_button.set_image (paste_url_icon);
+            paste_url_button.tooltip_text = "Paste video URL to download from the clipboard";
 
             button = new Gtk.Button.with_label ("Add");
             entry = new Gtk.Entry ();
