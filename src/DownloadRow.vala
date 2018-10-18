@@ -185,7 +185,7 @@ namespace CopyPasteGrab {
                 int standard_output;
                 int standard_error;
 
-                Process.spawn_async_with_pipes ("/home/chris/Videos",
+                Process.spawn_async_with_pipes (GLib.Environment.get_user_special_dir (GLib.UserDirectory.VIDEOS),
                     spawn_args,
                     spawn_env,
                     SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD,
