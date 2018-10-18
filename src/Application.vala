@@ -134,19 +134,32 @@ namespace CopyPasteGrab {
             // shows error so probably not needed when using ApplicationWindow
 
             button.clicked.connect (() => {
-                //button.sensitive = false;
-                DownloadRow download = new DownloadRow (entry.get_text());
+                add_download (entry.get_text());
                 entry.set_text ("");
-                downloads.append_val (download);
-                list_box.add (download.layout);
-                list_box.show_all ();
             });
 
             paste_url_button.clicked.connect (() => {
-                print ("clicked");
+                Gdk.Display display = main_window.get_display ();
+                Gtk.Clipboard clipboard = Gtk.Clipboard.get_default (display);
+                string text = clipboard.wait_for_text ();
+                if(validade_url (text)) {
+                    // TODO: Check if URL is already added to download list
+                    add_download (text);
+                }
             });
 
             main_window.show_all ();
+        }
+
+        private bool validade_url (string url) {
+            return true;
+        }
+
+        private void add_download (string url) {
+            DownloadRow download = new DownloadRow (url);
+            downloads.append_val (download);
+            list_box.add (download.layout);
+            list_box.show_all ();
         }
 
         public static int main (string[] args) {
