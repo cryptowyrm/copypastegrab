@@ -33,6 +33,7 @@ namespace CopyPasteGrab {
 	public class VideoDownload : Object {
         public signal void progress (double value);
         public signal void thumbnail (string path);
+        public signal void title (string value);
 
 		public DownloadStatus status {
 			get; private set; default = DownloadStatus.INITIAL;
@@ -74,6 +75,30 @@ namespace CopyPasteGrab {
 			video_info_command.start();
 		}
 
+        private void parse_json(string json_path) {
+            Json.Parser parser = new Json.Parser ();
+            try {
+                parser.load_from_file (json_path);
+            } catch (Error e) {
+                print ("Unable to parse data: %s\n", e.message);
+            }
+
+            Json.Node node = parser.get_root ();
+            Json.Reader reader = new Json.Reader (node);
+
+            foreach (string member in reader.list_members ()) {
+                switch (member) {
+                    case "title":
+                        if (reader.read_member ("title")) {
+                            string video_title = reader.get_string_value ();
+                            print ("Video title: %s\n", video_title);
+                            title (video_title);
+                        }
+                        break;
+                }
+            }
+        }
+
 		private void parse_line(string line) {
             if (line.length == 0) {
                 return;
@@ -103,25 +128,14 @@ namespace CopyPasteGrab {
                     "/",
                     json_file
                 );
-                Json.Parser parser = new Json.Parser ();
-                try {
-                    parser.load_from_file (json_path);
-                } catch (Error e) {
-                    print ("Unable to parse data: %s\n", e.message);
-                }
 
-                Json.Node node = parser.get_root ();
-                Json.Reader reader = new Json.Reader (node);
-
-                foreach (string member in reader.list_members ()) {
-                    switch (member) {
-                        case "title":
-                            if (reader.read_member ("title")) {
-                                print ("Video title: %s\n", reader.get_string_value ());
-                            }
-                            break;
-                    }
-                }
+                // Timeout for 1 second so that the file had time to be written
+                TimeoutSource time = new TimeoutSource (1000);
+                time.set_callback (() => {
+                    parse_json (json_path);
+                    return false;
+                });
+                time.attach (null);
 
                 return;
             }

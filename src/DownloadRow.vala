@@ -27,7 +27,8 @@ namespace CopyPasteGrab {
 
 		public Gtk.Grid layout;
 		public Gtk.ProgressBar progress_bar;
-		Gtk.Label label;
+		Gtk.Label url_label;
+		Gtk.Label title_label;
 		Gtk.Button start_button;
 		Gtk.Image start_icon;
 		Gtk.Image stop_icon;
@@ -44,12 +45,16 @@ namespace CopyPasteGrab {
 			progress_bar = new Gtk.ProgressBar ();
 			progress_bar.show_text = false;
 
-	        label = new Gtk.Label (video_url);
-	        label.hexpand = true;
-	        label.halign = Gtk.Align.START;
+	        url_label = new Gtk.Label (video_url);
+	        url_label.hexpand = true;
+	        url_label.halign = Gtk.Align.START;
+
+	        title_label = new Gtk.Label ("Downloading video information...");
+	        title_label.hexpand = true;
+	        title_label.halign = Gtk.Align.START;
 
 	        layout = new Gtk.Grid ();
-	        layout.orientation = Gtk.Orientation.HORIZONTAL;
+	        //layout.orientation = Gtk.Orientation.HORIZONTAL;
 	        layout.row_spacing = 10;
 	        layout.column_spacing = 10;
 	        layout.border_width = 10;
@@ -58,10 +63,18 @@ namespace CopyPasteGrab {
 
 	        thumbnail = new Granite.AsyncImage ();
 
+	        /*
 	        layout.add (thumbnail);
-	        layout.add (label);
+	        layout.add (url_label);
 	        layout.add (progress_bar);
 	        layout.add (start_button);
+			*/
+
+			layout.attach (thumbnail, 0, 0, 1, 2);
+			layout.attach (url_label, 1, 0, 1, 1);
+			layout.attach (title_label, 1, 1, 1, 1);
+			layout.attach (progress_bar, 2, 0, 1, 2);
+			layout.attach (start_button, 3, 0, 1, 1);
 
 	        // TODO: Continue download with -c
 	        start_button.clicked.connect(() => {
@@ -101,6 +114,10 @@ namespace CopyPasteGrab {
 	        this.video_download.thumbnail.connect((path) => {
 	        	File file = File.new_for_path (path);
 	        	thumbnail.set_from_file_async.begin (file, 100, 100, true);
+	        });
+
+	        this.video_download.title.connect((title) => {
+	        	title_label.label = title;
 	        });
 		}
 
