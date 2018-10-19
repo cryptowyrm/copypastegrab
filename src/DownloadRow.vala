@@ -20,22 +20,10 @@
 */
 
 namespace CopyPasteGrab {
-	public enum DownloadStatus {
-		INITIAL,
-		FETCHING_URL,
-		DOWNLOADING,
-		CONVERTING,
-		PAUSED,
-		DONE
-	}
 
 	public class DownloadRow : Object {
-		public DownloadStatus status {
-			get; private set; default = DownloadStatus.INITIAL;
-		}
-		public string video_url = null;
 		public bool is_downloading = false;
-		private Pid child_pid;
+		private VideoDownload video_download;
 
 		public Gtk.Grid layout;
 		public Gtk.ProgressBar progress_bar;
@@ -45,8 +33,6 @@ namespace CopyPasteGrab {
 		Gtk.Image stop_icon;
 
 		public DownloadRow(string video_url) {
-			this.video_url = video_url;
-
 			start_icon = new Gtk.Image ();
 			start_icon.gicon = new ThemedIcon ("media-playback-start");
 			start_icon.pixel_size = 16;
@@ -88,8 +74,10 @@ namespace CopyPasteGrab {
         		}
 	        });
 
-	        this.notify["status"].connect((s, p) => {
-	        	switch (status) {
+	        this.video_download = new VideoDownload (video_url);
+
+	        this.video_download.notify["status"].connect((s, p) => {
+	        	switch (video_download.status) {
 	        		case DownloadStatus.DOWNLOADING:
 	        			progress_bar.text = "Downloading";
 	        			break;
@@ -101,120 +89,20 @@ namespace CopyPasteGrab {
 	        			break;
 	        	}
 	        });
+
+	        this.video_download.progress.connect((progress) => {
+	        	progress_bar.set_fraction (progress / 100.0);
+	        });
 		}
 
 		public void stop() {
 			is_downloading = false;
-			status = DownloadStatus.PAUSED;
-			Posix.kill((int) child_pid, Posix.Signal.KILL);
+			video_download.stop ();
 		}
 
 		public void start() {
 			is_downloading = true;
-			shell_command(this.video_url);
+			video_download.start ();
 		}
-
-		private double parse_progress(string line) {
-            double progress = -1.0;
-
-            if (line.length == 0) {
-                return progress;
-            }
-
-            string[] tokens = line.split_set (" ");
-
-            if (tokens.length == 0) {
-                return progress;
-            }
-
-            switch (tokens[0]) {
-            	case "[download]":
-            		if(status != DownloadStatus.DOWNLOADING) {
-            		status = DownloadStatus.DOWNLOADING;
-	            	}
-	                // float is %f but double is %lf
-	                line.scanf ("[download] %lf", &progress);
-	                break;
-	            case "[ffmpeg]":
-	            	if(status != DownloadStatus.CONVERTING) {
-	            		status = DownloadStatus.CONVERTING;
-	            	}
-	            	break;
-            }
-
-            if (tokens[0] == "[download]") {
-            	
-            }
-            return progress;
-        }
-
-        private bool process_line (IOChannel channel, IOCondition condition, string stream_name) {
-            if (condition == IOCondition.HUP) {
-                print ("%s: The fd has been closed.\n", stream_name);
-                if(status != DownloadStatus.PAUSED) {
-                	status = DownloadStatus.DONE;
-                }
-                return false;
-            }
-
-            try {
-                string line;
-                channel.read_line (out line, null, null);
-                print ("%s: %s", stream_name, line);
-                double progress = parse_progress (line);
-                if(progress >= 0.0) {
-                    progress_bar.set_fraction (progress / 100.0);
-                }
-            } catch (IOChannelError e) {
-                print ("%s: IOChannelError: %s\n", stream_name, e.message);
-                return false;
-            } catch (ConvertError e) {
-                print ("%s: ConvertError: %s\n", stream_name, e.message);
-                return false;
-            }
-
-            return true;
-        }
-
-        private void shell_command (string url) {
-            try {
-                string[] spawn_args = {"youtube-dl", "--newline", url};
-                string[] spawn_env = Environ.get ();
-
-                int standard_input;
-                int standard_output;
-                int standard_error;
-
-                Process.spawn_async_with_pipes (GLib.Environment.get_user_special_dir (GLib.UserDirectory.VIDEOS),
-                    spawn_args,
-                    spawn_env,
-                    SpawnFlags.SEARCH_PATH | SpawnFlags.DO_NOT_REAP_CHILD,
-                    null,
-                    out child_pid,
-                    out standard_input,
-                    out standard_output,
-                    out standard_error);
-
-                // stdout:
-                IOChannel output = new IOChannel.unix_new (standard_output);
-                output.add_watch (IOCondition.IN | IOCondition.HUP, (channel, condition) => {
-                    return process_line (channel, condition, "stdout");
-                });
-
-                // stderr:
-                IOChannel error = new IOChannel.unix_new (standard_error);
-                error.add_watch (IOCondition.IN | IOCondition.HUP, (channel, condition) => {
-                    return process_line (channel, condition, "stderr");
-                });
-
-                ChildWatch.add (child_pid, (pid, status) => {
-                    // Triggered when the child indicated by child_pid exits
-                    Process.close_pid (pid);
-                    status = DownloadStatus.DONE;
-                });
-            } catch (SpawnError e) {
-                print ("Error: %s\n", e.message);
-            }
-        }
 	}
 }

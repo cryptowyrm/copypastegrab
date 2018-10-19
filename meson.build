@@ -6,6 +6,8 @@ executable(
     meson.project_name(),
     'src/Application.vala',
     'src/DownloadRow.vala',
+    'src/VideoDownload.vala',
+    'src/ShellCommand.vala',
     vala_args: [
         '--pkg=posix'
     ],
