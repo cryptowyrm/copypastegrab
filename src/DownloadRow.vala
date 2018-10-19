@@ -31,6 +31,7 @@ namespace CopyPasteGrab {
 		Gtk.Button start_button;
 		Gtk.Image start_icon;
 		Gtk.Image stop_icon;
+		Granite.AsyncImage thumbnail;
 
 		public DownloadRow(string video_url) {
 			start_icon = new Gtk.Image ();
@@ -55,6 +56,9 @@ namespace CopyPasteGrab {
 
 	        start_button = new Gtk.Button.from_icon_name ("media-playback-start");
 
+	        thumbnail = new Granite.AsyncImage ();
+
+	        layout.add (thumbnail);
 	        layout.add (label);
 	        layout.add (progress_bar);
 	        layout.add (start_button);
@@ -92,6 +96,11 @@ namespace CopyPasteGrab {
 
 	        this.video_download.progress.connect((progress) => {
 	        	progress_bar.set_fraction (progress / 100.0);
+	        });
+
+	        this.video_download.thumbnail.connect((path) => {
+	        	File file = File.new_for_path (path);
+	        	thumbnail.set_from_file_async.begin (file, 100, 100, true);
 	        });
 		}
 
