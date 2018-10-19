@@ -32,9 +32,12 @@ namespace CopyPasteGrab {
 
 	public class VideoDownload : Object {
         public signal void progress (double value);
+        public signal void thumbnail (string path);
+
 		public DownloadStatus status {
 			get; private set; default = DownloadStatus.INITIAL;
 		}
+
 		public string video_url = null;
         private ShellCommand video_info_command;
 
@@ -54,7 +57,7 @@ namespace CopyPasteGrab {
             );
 
             video_info_command.stdout.connect((line) => {
-                parse_progress (line);
+                parse_line (line);
             });
 
             video_info_command.done.connect(() => {
@@ -71,8 +74,55 @@ namespace CopyPasteGrab {
 			video_info_command.start();
 		}
 
-		private void parse_progress(string line) {
+		private void parse_line(string line) {
             if (line.length == 0) {
+                return;
+            }
+
+            // check if downloading thumbnail
+            string thumbnail_search = "Writing thumbnail to: ";
+            int thumbnail_index = line.index_of (thumbnail_search);
+            if(thumbnail_index > -1) {
+                string thumbnail_file = line.substring (thumbnail_index + thumbnail_search.length).strip ();
+                string thumbnail_path = string.join ("",
+                    GLib.Environment.get_user_special_dir (GLib.UserDirectory.VIDEOS),
+                    "/",
+                    thumbnail_file
+                );
+
+                thumbnail (thumbnail_path);
+            }
+
+            // check if downloading JSON
+            string json_search = "Writing video description metadata as JSON to: ";
+            int json_index = line.index_of (json_search);
+            if(json_index > -1) {
+                string json_file = line.substring (json_index + json_search.length).strip ();
+                string json_path = string.join ("",
+                    GLib.Environment.get_user_special_dir (GLib.UserDirectory.VIDEOS),
+                    "/",
+                    json_file
+                );
+                Json.Parser parser = new Json.Parser ();
+                try {
+                    parser.load_from_file (json_path);
+                } catch (Error e) {
+                    print ("Unable to parse data: %s\n", e.message);
+                }
+
+                Json.Node node = parser.get_root ();
+                Json.Reader reader = new Json.Reader (node);
+
+                foreach (string member in reader.list_members ()) {
+                    switch (member) {
+                        case "title":
+                            if (reader.read_member ("title")) {
+                                print ("Video title: %s\n", reader.get_string_value ());
+                            }
+                            break;
+                    }
+                }
+
                 return;
             }
 
