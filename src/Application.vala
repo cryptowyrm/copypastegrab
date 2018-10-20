@@ -34,6 +34,8 @@ namespace CopyPasteGrab {
         Gtk.Button paste_url_button;
         Gtk.Popover add_url_popover;
         Gtk.ListBox list_box;
+        Gtk.InfoBar infobar;
+        Gtk.Label info_label;
 
         Granite.Widgets.AlertView list_placeholder;
 
@@ -48,6 +50,15 @@ namespace CopyPasteGrab {
 
         protected override void activate () {
             downloads = new Array<DownloadRow> ();
+
+            infobar = new Gtk.InfoBar ();
+            infobar.no_show_all = true;
+            infobar.show_close_button = true;
+
+            info_label = new Gtk.Label ("");
+            Gtk.Container info_content = infobar.get_content_area ();
+            info_content.add (info_label);
+            info_label.show();
 
             add_url_icon = new Gtk.Image ();
             add_url_icon.gicon = new ThemedIcon ("insert-link");
@@ -115,9 +126,16 @@ namespace CopyPasteGrab {
             scrolled.shadow_type = Gtk.ShadowType.IN;
             scrolled.add (list_box);
 
+            layout.add (infobar);
             layout.add (scrolled);
 
             main_window.add (layout);
+
+            infobar.response.connect ((response_id) => {
+                if (response_id == Gtk.ResponseType.CLOSE) {
+                    infobar.hide ();
+                }
+            });
 
             button.clicked.connect (() => {
                 add_download (entry.get_text());
@@ -146,6 +164,12 @@ namespace CopyPasteGrab {
             downloads.append_val (download);
             list_box.add (download.layout);
             list_box.show_all ();
+
+            download.error.connect ((msg) => {
+                infobar.message_type = Gtk.MessageType.ERROR;
+                info_label.label = msg;
+                infobar.show ();
+            });
         }
 
         public static int main (string[] args) {

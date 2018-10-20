@@ -22,6 +22,8 @@
 namespace CopyPasteGrab {
 
 	public class DownloadRow : Object {
+		public signal void error (string msg);
+
 		public bool is_downloading = false;
 		private VideoDownload video_download;
 
@@ -116,6 +118,7 @@ namespace CopyPasteGrab {
 	        this.video_download.error.connect ((msg) => {
 	        	title_label.label = msg;
 	        	thumbnail.set_from_icon_name ("dialog-error", Gtk.IconSize.DIALOG);
+	        	error (msg + ": " + this.video_download.video.url);
 	        });
 
 	        video_download.start_info ();
