@@ -146,7 +146,6 @@ namespace CopyPasteGrab {
             downloads.append_val (download);
             list_box.add (download.layout);
             list_box.show_all ();
-            download.progress_bar.visible = false;
         }
 
         public static int main (string[] args) {

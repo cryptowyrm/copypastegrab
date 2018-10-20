@@ -45,6 +45,7 @@ namespace CopyPasteGrab {
 			progress_bar = new Gtk.ProgressBar ();
 			progress_bar.show_text = true;
 			progress_bar.visible = false;
+			progress_bar.no_show_all = true;
 
 	        url_label = new Gtk.Label (video_url);
 	        url_label.hexpand = true;
