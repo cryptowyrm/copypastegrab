@@ -43,7 +43,8 @@ namespace CopyPasteGrab {
 			stop_icon.pixel_size = 16;
 
 			progress_bar = new Gtk.ProgressBar ();
-			progress_bar.show_text = false;
+			progress_bar.show_text = true;
+			progress_bar.visible = false;
 
 	        url_label = new Gtk.Label (video_url);
 	        url_label.hexpand = true;
@@ -75,7 +76,6 @@ namespace CopyPasteGrab {
 		        	stop();
         		} else {
         			progress_bar.text = "Downloading";
-		        	progress_bar.show_text = true;
 		        	start_button.set_image (stop_icon);
 		        	start();
         		}
@@ -122,6 +122,7 @@ namespace CopyPasteGrab {
 
 		public void start() {
 			is_downloading = true;
+			progress_bar.visible = true;
 			video_download.start_download ();
 		}
 	}
