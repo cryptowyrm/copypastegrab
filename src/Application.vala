@@ -37,10 +37,7 @@ namespace CopyPasteGrab {
 
         Granite.Widgets.AlertView list_placeholder;
 
-        Array<DownloadRow> downloads;
-
-        //public signal void progress_event (int download_id, double progress);
-        
+        Array<DownloadRow> downloads;        
 
         public MyApp () {
             Object (
@@ -121,17 +118,6 @@ namespace CopyPasteGrab {
             layout.add (scrolled);
 
             main_window.add (layout);
-
-            // testing timeout for hiding infobar msgs after few seconds
-            TimeoutSource time = new TimeoutSource (2000);
-            time.set_callback (() => {
-                print ("Time!\n");
-                return false;
-            });
-            time.attach (null);
-
-            //main_window.destroy.connect (Gtk.main_quit);
-            // shows error so probably not needed when using ApplicationWindow
 
             button.clicked.connect (() => {
                 add_download (entry.get_text());

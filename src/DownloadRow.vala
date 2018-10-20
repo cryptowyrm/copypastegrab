@@ -54,7 +54,6 @@ namespace CopyPasteGrab {
 	        title_label.halign = Gtk.Align.START;
 
 	        layout = new Gtk.Grid ();
-	        //layout.orientation = Gtk.Orientation.HORIZONTAL;
 	        layout.row_spacing = 10;
 	        layout.column_spacing = 10;
 	        layout.border_width = 10;
@@ -64,24 +63,14 @@ namespace CopyPasteGrab {
 
 	        thumbnail = new Granite.AsyncImage ();
 
-	        /*
-	        layout.add (thumbnail);
-	        layout.add (url_label);
-	        layout.add (progress_bar);
-	        layout.add (start_button);
-			*/
-
 			layout.attach (thumbnail, 0, 0, 1, 2);
 			layout.attach (url_label, 1, 0, 1, 1);
 			layout.attach (title_label, 1, 1, 1, 1);
 			layout.attach (progress_bar, 2, 0, 1, 2);
 			layout.attach (start_button, 3, 0, 1, 1);
 
-	        // TODO: Continue download with -c
 	        start_button.clicked.connect(() => {
 	        	if(is_downloading) {
-	        		progress_bar.text = "Canceled";
-		        	progress_bar.show_text = true;
 		        	start_button.set_image (start_icon);
 		        	stop();
         		} else {
@@ -102,8 +91,12 @@ namespace CopyPasteGrab {
 	        		case DownloadStatus.CONVERTING:
 	        			progress_bar.text = "Converting";
 	        			break;
+	        		case DownloadStatus.PAUSED:
+	        			progress_bar.text = "Stopped";
+	        			break;
 	        		case DownloadStatus.DONE:
 	        			progress_bar.text = "Completed";
+	        			start_button.sensitive = false;
 	        			break;
 	        	}
 	        });
@@ -129,6 +122,7 @@ namespace CopyPasteGrab {
 
 		public void start() {
 			is_downloading = true;
+			video_download.start_download ();
 		}
 	}
 }

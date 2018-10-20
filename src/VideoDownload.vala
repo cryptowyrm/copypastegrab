@@ -43,6 +43,7 @@ namespace CopyPasteGrab {
         }
 
         private ShellCommand video_info_command;
+        private ShellCommand video_download_command;
 
 		public VideoDownload(string video_url) {
             this.video = new VideoInfo ();
@@ -60,25 +61,49 @@ namespace CopyPasteGrab {
                 }
             );
 
-            video_info_command.stdout.connect((line) => {
+            video_info_command.stdout.connect ((line) => {
                 parse_line (line);
             });
 
-            video_info_command.done.connect(() => {
-                status = DownloadStatus.DONE;
+            video_info_command.done.connect (() => {
                 parse_json (this.video.json);
                 video_info (this.video);
+
+                video_download_command = new ShellCommand (
+                    GLib.Environment.get_user_special_dir (GLib.UserDirectory.VIDEOS),
+                    {
+                        "youtube-dl",
+                        "--newline",
+                        "--load-info-json",
+                        this.video.json,
+                        video_url
+                    }
+                );
+
+                video_download_command.stdout.connect ((line) => {
+                    parse_line (line);
+                });
+
+                video_download_command.done.connect (() => {
+                    if (status != DownloadStatus.PAUSED) {
+                        status = DownloadStatus.DONE;
+                    }
+                });
             });
 		}
 
 		public void stop() {
 			status = DownloadStatus.PAUSED;
-			video_info_command.stop();
+			video_download_command.stop ();
 		}
 
 		public void start_info () {
-			video_info_command.start();
+			video_info_command.start ();
 		}
+
+        public void start_download () {
+            video_download_command.start ();
+        }
 
         private void parse_json(string json_path) {
             Json.Parser parser = new Json.Parser ();
