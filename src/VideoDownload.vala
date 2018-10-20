@@ -76,7 +76,7 @@ namespace CopyPasteGrab {
 			video_info_command.stop();
 		}
 
-		public void start() {
+		public void start_info () {
 			video_info_command.start();
 		}
 

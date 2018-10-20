@@ -60,6 +60,7 @@ namespace CopyPasteGrab {
 	        layout.border_width = 10;
 
 	        start_button = new Gtk.Button.from_icon_name ("media-playback-start");
+	        start_button.sensitive = false;
 
 	        thumbnail = new Granite.AsyncImage ();
 
@@ -115,7 +116,10 @@ namespace CopyPasteGrab {
 	        	File file = File.new_for_path (info.thumbnail);
 	        	thumbnail.set_from_file_async.begin (file, 100, 100, true);
 	        	title_label.label = info.title;
+	        	start_button.sensitive = true;
 	        });
+
+	        video_download.start_info ();
 		}
 
 		public void stop() {
@@ -125,7 +129,6 @@ namespace CopyPasteGrab {
 
 		public void start() {
 			is_downloading = true;
-			video_download.start ();
 		}
 	}
 }
