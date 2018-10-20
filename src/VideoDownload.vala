@@ -27,12 +27,14 @@ namespace CopyPasteGrab {
 		DOWNLOADING,
 		CONVERTING,
 		PAUSED,
-		DONE
+		DONE,
+        ERROR
 	}
 
 	public class VideoDownload : Object {
         public signal void progress (double value);
         public signal void video_info (VideoInfo info);
+        public signal void error (string msg);
 
 		public DownloadStatus status {
 			get; private set; default = DownloadStatus.INITIAL;
@@ -65,7 +67,21 @@ namespace CopyPasteGrab {
                 parse_line (line);
             });
 
+            video_info_command.stderr.connect ((line) => {
+                if (line.index_of ("ERROR: Unsupported URL:") > -1) {
+                    error ("Unsupported website");
+                    status = DownloadStatus.ERROR;
+                } else if (line.has_prefix ("ERROR:") && line.index_of ("is not a valid URL.") > -1) {
+                    error ("Not a valid URL");
+                    status = DownloadStatus.ERROR;
+                }
+            });
+
             video_info_command.done.connect (() => {
+                if (status == DownloadStatus.ERROR) {
+                    return;
+                }
+
                 parse_json (this.video.json);
                 video_info (this.video);
 

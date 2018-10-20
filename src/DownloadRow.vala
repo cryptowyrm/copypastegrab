@@ -96,20 +96,25 @@ namespace CopyPasteGrab {
 	        			break;
 	        		case DownloadStatus.DONE:
 	        			progress_bar.text = "Completed";
-	        			start_button.sensitive = false;
+	        			start_button.visible = false;
 	        			break;
 	        	}
 	        });
 
-	        this.video_download.progress.connect((progress) => {
+	        this.video_download.progress.connect ((progress) => {
 	        	progress_bar.set_fraction (progress / 100.0);
 	        });
 
-	        this.video_download.video_info.connect((info) => {
+	        this.video_download.video_info.connect ((info) => {
 	        	File file = File.new_for_path (info.thumbnail);
 	        	thumbnail.set_from_file_async.begin (file, 100, 100, true);
 	        	title_label.label = info.title;
 	        	start_button.sensitive = true;
+	        });
+
+	        this.video_download.error.connect ((msg) => {
+	        	title_label.label = msg;
+	        	thumbnail.set_from_icon_name ("dialog-error", Gtk.IconSize.DIALOG);
 	        });
 
 	        video_download.start_info ();
