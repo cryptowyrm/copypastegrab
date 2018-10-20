@@ -111,13 +111,10 @@ namespace CopyPasteGrab {
 	        	progress_bar.set_fraction (progress / 100.0);
 	        });
 
-	        this.video_download.thumbnail.connect((path) => {
-	        	File file = File.new_for_path (path);
+	        this.video_download.video_info.connect((info) => {
+	        	File file = File.new_for_path (info.thumbnail);
 	        	thumbnail.set_from_file_async.begin (file, 100, 100, true);
-	        });
-
-	        this.video_download.title.connect((title) => {
-	        	title_label.label = title;
+	        	title_label.label = info.title;
 	        });
 		}
 

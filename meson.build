@@ -7,6 +7,7 @@ executable(
     'src/Application.vala',
     'src/DownloadRow.vala',
     'src/VideoDownload.vala',
+    'src/VideoInfo.vala',
     'src/ShellCommand.vala',
     vala_args: [
         '--pkg=posix'

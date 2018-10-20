@@ -32,18 +32,21 @@ namespace CopyPasteGrab {
 
 	public class VideoDownload : Object {
         public signal void progress (double value);
-        public signal void thumbnail (string path);
-        public signal void title (string value);
+        public signal void video_info (VideoInfo info);
 
 		public DownloadStatus status {
 			get; private set; default = DownloadStatus.INITIAL;
 		}
 
-		public string video_url = null;
+        public VideoInfo video {
+            get; private set;
+        }
+
         private ShellCommand video_info_command;
 
 		public VideoDownload(string video_url) {
-			this.video_url = video_url;
+            this.video = new VideoInfo ();
+			this.video.url = video_url;
 
             video_info_command = new ShellCommand (
                 GLib.Environment.get_user_special_dir (GLib.UserDirectory.VIDEOS),
@@ -63,6 +66,8 @@ namespace CopyPasteGrab {
 
             video_info_command.done.connect(() => {
                 status = DownloadStatus.DONE;
+                parse_json (this.video.json);
+                video_info (this.video);
             });
 		}
 
@@ -92,7 +97,7 @@ namespace CopyPasteGrab {
                         if (reader.read_member ("title")) {
                             string video_title = reader.get_string_value ();
                             print ("Video title: %s\n", video_title);
-                            title (video_title);
+                            this.video.title = video_title;
                         }
                         break;
                 }
@@ -115,7 +120,9 @@ namespace CopyPasteGrab {
                     thumbnail_file
                 );
 
-                thumbnail (thumbnail_path);
+                this.video.thumbnail = thumbnail_path;
+
+                return;
             }
 
             // check if downloading JSON
@@ -129,13 +136,7 @@ namespace CopyPasteGrab {
                     json_file
                 );
 
-                // Timeout for 1 second so that the file had time to be written
-                TimeoutSource time = new TimeoutSource (1000);
-                time.set_callback (() => {
-                    parse_json (json_path);
-                    return false;
-                });
-                time.attach (null);
+                this.video.json = json_path;
 
                 return;
             }
