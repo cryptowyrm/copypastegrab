@@ -52,7 +52,7 @@ namespace CopyPasteGrab {
 			this.video.url = video_url;
 
             video_info_command = new ShellCommand (
-                GLib.Environment.get_user_special_dir (GLib.UserDirectory.VIDEOS),
+                get_tmp_dir ().get_path (),
                 {
                     "youtube-dl",
                     "--newline",
@@ -155,13 +155,8 @@ namespace CopyPasteGrab {
             int thumbnail_index = line.index_of (thumbnail_search);
             if(thumbnail_index > -1) {
                 string thumbnail_file = line.substring (thumbnail_index + thumbnail_search.length).strip ();
-                string thumbnail_path = string.join ("",
-                    GLib.Environment.get_user_special_dir (GLib.UserDirectory.VIDEOS),
-                    "/",
-                    thumbnail_file
-                );
 
-                this.video.thumbnail = thumbnail_path;
+                this.video.thumbnail = get_tmp_dir ().get_child (thumbnail_file).get_path ();
 
                 return;
             }
@@ -171,13 +166,8 @@ namespace CopyPasteGrab {
             int json_index = line.index_of (json_search);
             if(json_index > -1) {
                 string json_file = line.substring (json_index + json_search.length).strip ();
-                string json_path = string.join ("",
-                    GLib.Environment.get_user_special_dir (GLib.UserDirectory.VIDEOS),
-                    "/",
-                    json_file
-                );
 
-                this.video.json = json_path;
+                this.video.json = get_tmp_dir ().get_child (json_file).get_path ();
 
                 return;
             }
