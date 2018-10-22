@@ -56,6 +56,7 @@ namespace CopyPasteGrab {
             infobar.show_close_button = true;
 
             info_label = new Gtk.Label ("");
+            info_label.ellipsize = Pango.EllipsizeMode.END;
             Gtk.Container info_content = infobar.get_content_area ();
             info_content.add (info_label);
             info_label.show();

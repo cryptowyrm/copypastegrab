@@ -50,12 +50,15 @@ namespace CopyPasteGrab {
 			progress_bar.no_show_all = true;
 
 	        url_label = new Gtk.Label (video_url);
+	        url_label.tooltip_text = video_url;
 	        url_label.hexpand = true;
 	        url_label.halign = Gtk.Align.START;
+	        url_label.ellipsize = Pango.EllipsizeMode.END;
 
 	        title_label = new Gtk.Label ("Downloading video information...");
 	        title_label.hexpand = true;
 	        title_label.halign = Gtk.Align.START;
+	        title_label.ellipsize = Pango.EllipsizeMode.END;
 
 	        layout = new Gtk.Grid ();
 	        layout.row_spacing = 10;
