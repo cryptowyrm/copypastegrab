@@ -64,16 +64,26 @@ namespace CopyPasteGrab {
 	        layout.row_spacing = 10;
 	        layout.column_spacing = 10;
 	        layout.border_width = 10;
+	        layout.set_row_baseline_position (0, Gtk.BaselinePosition.TOP);
+	        layout.set_row_baseline_position (1, Gtk.BaselinePosition.TOP);
 
 	        start_button = new Gtk.Button.from_icon_name ("media-playback-start");
 	        start_button.sensitive = false;
+	        start_button.valign = Gtk.Align.START;
 
 	        thumbnail = new Granite.AsyncImage ();
+	        thumbnail.valign = Gtk.Align.START;
+
+	        Gtk.Grid labels = new Gtk.Grid ();
+	        labels.row_spacing = 10;
+	        labels.orientation = Gtk.Orientation.VERTICAL;
+
+	        labels.add (url_label);
+	        labels.add (title_label);
+	        labels.add (progress_bar);
 
 			layout.attach (thumbnail, 0, 0, 1, 2);
-			layout.attach (url_label, 1, 0, 1, 1);
-			layout.attach (title_label, 1, 1, 1, 1);
-			layout.attach (progress_bar, 2, 0, 1, 2);
+			layout.attach (labels, 1, 0, 1, 2);
 			layout.attach (start_button, 3, 0, 1, 1);
 
 	        start_button.clicked.connect(() => {
