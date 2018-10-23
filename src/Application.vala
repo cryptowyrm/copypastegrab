@@ -139,14 +139,14 @@ namespace CopyPasteGrab {
             });
 
             button.clicked.connect (() => {
-                add_download (entry.get_text());
+                add_download (entry.get_text().strip ());
                 entry.set_text ("");
             });
 
             paste_url_button.clicked.connect (() => {
                 Gdk.Display display = main_window.get_display ();
                 Gtk.Clipboard clipboard = Gtk.Clipboard.get_default (display);
-                string text = clipboard.wait_for_text ();
+                string text = clipboard.wait_for_text ().strip ();
                 if(validade_url (text)) {
                     // TODO: Check if URL is already added to download list
                     add_download (text);
