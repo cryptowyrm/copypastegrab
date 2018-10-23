@@ -25,7 +25,7 @@ namespace CopyPasteGrab {
 		public signal void error (string msg);
 
 		public bool is_downloading = false;
-		private VideoDownload video_download;
+		public VideoDownload video_download;
 
 		public Gtk.Grid layout;
 		public Gtk.ProgressBar progress_bar;

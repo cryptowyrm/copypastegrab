@@ -36,6 +36,8 @@ namespace CopyPasteGrab {
         Gtk.ListBox list_box;
         Gtk.InfoBar infobar;
         Gtk.Label info_label;
+        Gtk.Button clear_completed_button;
+        Gtk.Image clear_completed_icon;
 
         Granite.Widgets.AlertView list_placeholder;
 
@@ -69,6 +71,15 @@ namespace CopyPasteGrab {
             paste_url_icon.gicon = new ThemedIcon ("edit-paste");
             paste_url_icon.pixel_size = 24;
 
+            clear_completed_icon = new Gtk.Image ();
+            clear_completed_icon.gicon = new ThemedIcon ("edit-clear");
+            clear_completed_icon.pixel_size = 24;
+
+            clear_completed_button = new Gtk.Button ();
+            clear_completed_button.relief = Gtk.ReliefStyle.NONE;
+            clear_completed_button.set_image (clear_completed_icon);
+            clear_completed_button.tooltip_text = "Clear all completed downloads";
+
             add_url_button = new Gtk.MenuButton ();
             add_url_button.use_popover = true;
             add_url_button.relief = Gtk.ReliefStyle.NONE;
@@ -100,6 +111,7 @@ namespace CopyPasteGrab {
             header.set_show_close_button (true);
             header.pack_start (add_url_button);
             header.pack_start (paste_url_button);
+            header.pack_end (clear_completed_button);
 
             var main_window = new Gtk.ApplicationWindow (this);
             main_window.set_titlebar (header);
@@ -166,6 +178,10 @@ namespace CopyPasteGrab {
                 }
             });
 
+            clear_completed_button.clicked.connect(() => {
+                clear_completed ();
+            });
+
             main_window.show_all ();
         }
 
@@ -186,6 +202,15 @@ namespace CopyPasteGrab {
                 info_label.label = msg;
                 infobar.show ();
             });
+        }
+
+        private void clear_completed () {
+            for (int i = 0; i < downloads.length; i++) {
+                DownloadRow download = downloads.index (i);
+                if (download.video_download.status >= DownloadStatus.DONE) {
+                    download.layout.hide ();
+                }
+            }
         }
 
         public static int main (string[] args) {
