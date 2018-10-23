@@ -157,6 +157,8 @@ namespace CopyPasteGrab {
         }
 
         private bool validade_url (string url) {
+            if (url.length == 0)
+                return false;
             return true;
         }
 
