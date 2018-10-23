@@ -68,13 +68,19 @@ namespace CopyPasteGrab {
             });
 
             video_info_command.stderr.connect ((line) => {
-                if (line.index_of ("ERROR: Unsupported URL:") > -1) {
-                    error ("Unsupported website");
-                    status = DownloadStatus.ERROR;
-                } else if (line.has_prefix ("ERROR:") && line.index_of ("is not a valid URL.") > -1) {
-                    error ("Not a valid URL");
-                    status = DownloadStatus.ERROR;
+                if (status != DownloadStatus.ERROR) {
+                    if (line.index_of ("ERROR: Unsupported URL:") > -1) {
+                        error ("Unsupported website");
+                        status = DownloadStatus.ERROR;
+                    } else if (line.has_prefix ("ERROR:") && line.index_of ("is not a valid URL.") > -1) {
+                        error ("Not a valid URL");
+                        status = DownloadStatus.ERROR;
+                    } else if (line.has_prefix ("ERROR:")) {
+                        error (line);
+                        status = DownloadStatus.ERROR;
+                    }
                 }
+                
             });
 
             video_info_command.done.connect (() => {
