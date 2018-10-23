@@ -139,17 +139,30 @@ namespace CopyPasteGrab {
             });
 
             button.clicked.connect (() => {
-                add_download (entry.get_text().strip ());
-                entry.set_text ("");
+                add_url_button.popover.popdown ();
+                string url = entry.get_text().strip ();
+                if (validade_url (url)) {
+                    add_download (url);
+                    entry.set_text ("");
+                } else {
+                    infobar.message_type = Gtk.MessageType.WARNING;
+                    info_label.label = "Not a valid URL";
+                    infobar.show ();
+                }
+                
             });
 
             paste_url_button.clicked.connect (() => {
                 Gdk.Display display = main_window.get_display ();
                 Gtk.Clipboard clipboard = Gtk.Clipboard.get_default (display);
                 string text = clipboard.wait_for_text ().strip ();
-                if(validade_url (text)) {
+                if (validade_url (text)) {
                     // TODO: Check if URL is already added to download list
                     add_download (text);
+                } else {
+                    infobar.message_type = Gtk.MessageType.WARNING;
+                    info_label.label = "Not a valid URL";
+                    infobar.show ();
                 }
             });
 
