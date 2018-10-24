@@ -38,6 +38,8 @@ namespace CopyPasteGrab {
         Gtk.Label info_label;
         Gtk.Button clear_completed_button;
         Gtk.Image clear_completed_icon;
+        Gtk.Button download_all_button;
+        Gtk.Image download_all_icon;
 
         Granite.Widgets.AlertView list_placeholder;
 
@@ -74,6 +76,15 @@ namespace CopyPasteGrab {
             clear_completed_icon = new Gtk.Image ();
             clear_completed_icon.gicon = new ThemedIcon ("edit-clear");
             clear_completed_icon.pixel_size = 24;
+
+            download_all_icon = new Gtk.Image ();
+            download_all_icon.gicon = new ThemedIcon ("media-playback-start");
+            download_all_icon.pixel_size = 24;
+
+            download_all_button = new Gtk.Button ();
+            download_all_button.relief = Gtk.ReliefStyle.NONE;
+            download_all_button.set_image (download_all_icon);
+            download_all_button.tooltip_text = "Start all downloads";
 
             clear_completed_button = new Gtk.Button ();
             clear_completed_button.relief = Gtk.ReliefStyle.NONE;
@@ -112,6 +123,7 @@ namespace CopyPasteGrab {
             header.pack_start (add_url_button);
             header.pack_start (paste_url_button);
             header.pack_end (clear_completed_button);
+            header.pack_end (download_all_button);
 
             var main_window = new Gtk.ApplicationWindow (this);
             main_window.set_titlebar (header);
@@ -182,6 +194,10 @@ namespace CopyPasteGrab {
                 clear_completed ();
             });
 
+            download_all_button.clicked.connect(() => {
+                download_all ();
+            });
+
             main_window.show_all ();
         }
 
@@ -209,6 +225,14 @@ namespace CopyPasteGrab {
                 if (download.video_download.status >= DownloadStatus.DONE) {
                     list_box.remove (download.layout.get_parent ());
                     downloads.remove (download);
+                }
+            });
+        }
+
+        private void download_all () {
+            downloads.foreach((download) => {
+                if (download.video_download.status == DownloadStatus.PAUSED || download.video_download.status == DownloadStatus.READY) {
+                    download.start ();
                 }
             });
         }

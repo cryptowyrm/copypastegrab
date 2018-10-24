@@ -89,11 +89,8 @@ namespace CopyPasteGrab {
 
 	        start_button.clicked.connect(() => {
 	        	if(is_downloading) {
-		        	start_button.set_image (start_icon);
 		        	stop();
         		} else {
-        			progress_bar.text = "Downloading";
-		        	start_button.set_image (stop_icon);
 		        	start();
         		}
 	        });
@@ -140,11 +137,14 @@ namespace CopyPasteGrab {
 		}
 
 		public void stop() {
+			start_button.set_image (start_icon);
 			is_downloading = false;
 			video_download.stop ();
 		}
 
 		public void start() {
+			progress_bar.text = "Downloading";
+		    start_button.set_image (stop_icon);
 			is_downloading = true;
 			progress_bar.visible = true;
 			video_download.start_download ();

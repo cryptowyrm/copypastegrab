@@ -27,6 +27,7 @@ namespace CopyPasteGrab {
 		DOWNLOADING,
 		CONVERTING,
 		PAUSED,
+        READY,
 		DONE,
         ERROR
 	}
@@ -113,6 +114,8 @@ namespace CopyPasteGrab {
                         status = DownloadStatus.DONE;
                     }
                 });
+
+                status = DownloadStatus.READY;
             });
 		}
 
