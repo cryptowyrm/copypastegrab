@@ -10,6 +10,7 @@ executable(
     'src/VideoInfo.vala',
     'src/ShellCommand.vala',
     'src/Utility.vala',
+    'src/SettingsPopover.vala',
     vala_args: [
         '--pkg=posix'
     ],

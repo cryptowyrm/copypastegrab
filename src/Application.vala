@@ -40,6 +40,8 @@ namespace CopyPasteGrab {
         Gtk.Image clear_completed_icon;
         Gtk.Button download_all_button;
         Gtk.Image download_all_icon;
+        Gtk.MenuButton settings_button;
+        SettingsPopover settings_popover;
 
         Granite.Widgets.AlertView list_placeholder;
 
@@ -99,6 +101,14 @@ namespace CopyPasteGrab {
             add_url_popover = new Gtk.Popover (add_url_button);
             add_url_button.popover = add_url_popover;
 
+            settings_button = new Gtk.MenuButton ();
+            settings_button.use_popover = true;
+            settings_button.relief = Gtk.ReliefStyle.NONE;
+            settings_button.image = new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.LARGE_TOOLBAR);
+            settings_button.tooltip_text = "Settings";
+            settings_popover = new SettingsPopover ();
+            settings_button.popover = settings_popover;
+
             paste_url_button = new Gtk.Button ();
             paste_url_button.relief = Gtk.ReliefStyle.NONE;
             paste_url_button.set_image (paste_url_icon);
@@ -123,6 +133,7 @@ namespace CopyPasteGrab {
             header.set_show_close_button (true);
             header.pack_start (add_url_button);
             header.pack_start (paste_url_button);
+            header.pack_end (settings_button);
             header.pack_end (clear_completed_button);
             header.pack_end (download_all_button);
 
