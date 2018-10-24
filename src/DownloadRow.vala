@@ -110,7 +110,7 @@ namespace CopyPasteGrab {
                         break;
                     case DownloadStatus.DONE:
                         progress_bar.text = "Completed";
-                        start_button.visible = false;
+                        start_button.destroy ();
                         break;
                 }
             });
@@ -130,6 +130,7 @@ namespace CopyPasteGrab {
             this.video_download.error.connect ((msg) => {
                 title_label.label = msg;
                 thumbnail.set_from_icon_name ("dialog-error", Gtk.IconSize.DIALOG);
+                start_button.destroy ();
                 error (msg + ": " + this.video_download.video.url);
             });
 
