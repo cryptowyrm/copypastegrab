@@ -41,7 +41,7 @@ namespace CopyPasteGrab {
 
         Granite.Widgets.AlertView list_placeholder;
 
-        Array<DownloadRow> downloads;        
+        List<DownloadRow> downloads;        
 
         public MyApp () {
             Object (
@@ -51,7 +51,7 @@ namespace CopyPasteGrab {
         }
 
         protected override void activate () {
-            downloads = new Array<DownloadRow> ();
+            downloads = new List<DownloadRow> ();
 
             infobar = new Gtk.InfoBar ();
             infobar.no_show_all = true;
@@ -193,7 +193,7 @@ namespace CopyPasteGrab {
 
         private void add_download (string url) {
             DownloadRow download = new DownloadRow (url);
-            downloads.append_val (download);
+            downloads.append (download);
             list_box.add (download.layout);
             list_box.show_all ();
 
@@ -205,12 +205,12 @@ namespace CopyPasteGrab {
         }
 
         private void clear_completed () {
-            for (int i = 0; i < downloads.length; i++) {
-                DownloadRow download = downloads.index (i);
+            downloads.foreach((download) => {
                 if (download.video_download.status >= DownloadStatus.DONE) {
-                    download.layout.hide ();
+                    list_box.remove (download.layout.get_parent ());
+                    downloads.remove (download);
                 }
-            }
+            });
         }
 
         public static int main (string[] args) {
