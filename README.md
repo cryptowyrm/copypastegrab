@@ -27,7 +27,7 @@ sudo apt install elementary-sdk
 Then do:
 
 ```
-git clone https://github.com/cryptowyrm/copypastegrab.git .
+git clone https://github.com/cryptowyrm/copypastegrab.git
 cd copypastegrab
 meson build
 cd build
