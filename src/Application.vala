@@ -117,6 +117,7 @@ namespace CopyPasteGrab {
             topbar.add (button);
             add_url_popover.add (topbar);
             topbar.show_all ();
+            entry.has_focus = true;
 
             header = new Gtk.HeaderBar ();
             header.set_show_close_button (true);
@@ -163,17 +164,11 @@ namespace CopyPasteGrab {
             });
 
             button.clicked.connect (() => {
-                add_url_button.popover.popdown ();
-                string url = entry.get_text().strip ();
-                if (validade_url (url)) {
-                    add_download (url);
-                    entry.set_text ("");
-                } else {
-                    infobar.message_type = Gtk.MessageType.WARNING;
-                    info_label.label = "Not a valid URL";
-                    infobar.show ();
-                }
-                
+                add_url_clicked ();
+            });
+
+            entry.activate.connect (() => {
+                add_url_clicked ();
             });
 
             paste_url_button.clicked.connect (() => {
@@ -205,6 +200,19 @@ namespace CopyPasteGrab {
             if (url.length == 0)
                 return false;
             return true;
+        }
+
+        private void add_url_clicked () {
+            add_url_button.popover.popdown ();
+            string url = entry.get_text().strip ();
+            if (validade_url (url)) {
+                add_download (url);
+                entry.set_text ("");
+            } else {
+                infobar.message_type = Gtk.MessageType.WARNING;
+                info_label.label = "Not a valid URL";
+                infobar.show ();
+            }
         }
 
         private void add_download (string url) {
