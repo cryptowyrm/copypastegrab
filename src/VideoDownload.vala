@@ -189,9 +189,8 @@ namespace CopyPasteGrab {
             		if(status != DownloadStatus.DOWNLOADING) {
             		  status = DownloadStatus.DOWNLOADING;
 	            	}
-	                // float is %f but double is %lf
-                    double progress_value = -1.0;
-	                line.scanf ("[download] %lf", &progress_value);
+	                
+                    double progress_value = double.parse(line.slice(line.index_of(" "), line.index_of("%")).strip());
                     if (progress_value >= 0.0) {
                         progress (progress_value);
                     }
