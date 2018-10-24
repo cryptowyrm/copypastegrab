@@ -215,6 +215,13 @@ namespace CopyPasteGrab {
                     status = DownloadStatus.ERROR;
                     error ("Downloading channels isn't implemented yet");
                     break;
+                case "[youtube:playlist]":
+                    if (line.index_of ("Downloading just video") == -1) {
+                        video_info_command.stop ();
+                        status = DownloadStatus.ERROR;
+                        error ("Downloading playlists isn't implemented yet");
+                    }
+                    break;
             }
         }
     }
