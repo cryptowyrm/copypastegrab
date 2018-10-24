@@ -21,15 +21,15 @@
 
 namespace CopyPasteGrab {
 
-	public class VideoInfo : Object {
-		public string url { get; set; }
-		public string title { get; set; }
-		public string thumbnail { get; set; }
-		public string json { get; set; }
+    public class VideoInfo : Object {
+        public string url { get; set; }
+        public string title { get; set; }
+        public string thumbnail { get; set; }
+        public string json { get; set; }
 
-		public VideoInfo () {
+        public VideoInfo () {
 
-		}
-	}
+        }
+    }
 
 }

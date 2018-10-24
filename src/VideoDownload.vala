@@ -21,25 +21,25 @@
 
 namespace CopyPasteGrab {
 
-	public enum DownloadStatus {
-		INITIAL,
-		FETCHING_URL,
-		DOWNLOADING,
-		CONVERTING,
-		PAUSED,
+    public enum DownloadStatus {
+        INITIAL,
+        FETCHING_URL,
+        DOWNLOADING,
+        CONVERTING,
+        PAUSED,
         READY,
-		DONE,
+        DONE,
         ERROR
-	}
+    }
 
-	public class VideoDownload : Object {
+    public class VideoDownload : Object {
         public signal void progress (double value, string msg);
         public signal void video_info (VideoInfo info);
         public signal void error (string msg);
 
-		public DownloadStatus status {
-			get; private set; default = DownloadStatus.INITIAL;
-		}
+        public DownloadStatus status {
+            get; private set; default = DownloadStatus.INITIAL;
+        }
 
         public VideoInfo video {
             get; private set;
@@ -48,9 +48,9 @@ namespace CopyPasteGrab {
         private ShellCommand video_info_command;
         private ShellCommand video_download_command;
 
-		public VideoDownload(string video_url) {
+        public VideoDownload(string video_url) {
             this.video = new VideoInfo ();
-			this.video.url = video_url;
+            this.video.url = video_url;
 
             video_info_command = new ShellCommand (
                 get_tmp_dir ().get_path (),
@@ -117,16 +117,16 @@ namespace CopyPasteGrab {
 
                 status = DownloadStatus.READY;
             });
-		}
+        }
 
-		public void stop() {
-			status = DownloadStatus.PAUSED;
-			video_download_command.stop ();
-		}
+        public void stop() {
+            status = DownloadStatus.PAUSED;
+            video_download_command.stop ();
+        }
 
-		public void start_info () {
-			video_info_command.start ();
-		}
+        public void start_info () {
+            video_info_command.start ();
+        }
 
         public void start_download () {
             video_download_command.start ();
@@ -156,7 +156,7 @@ namespace CopyPasteGrab {
             }
         }
 
-		private void parse_line(string line) {
+        private void parse_line(string line) {
             if (line.length == 0) {
                 return;
             }
@@ -190,11 +190,11 @@ namespace CopyPasteGrab {
             }
 
             switch (tokens[0]) {
-            	case "[download]":
-            		if(status != DownloadStatus.DOWNLOADING) {
-            		  status = DownloadStatus.DOWNLOADING;
-	            	}
-	                
+                case "[download]":
+                    if(status != DownloadStatus.DOWNLOADING) {
+                      status = DownloadStatus.DOWNLOADING;
+                    }
+                    
                     double progress_value = double.parse(line.slice(line.index_of(" "), line.index_of("%")).strip());
                     string progress_msg = line.substring (line.index_of (" "));
 
@@ -204,12 +204,12 @@ namespace CopyPasteGrab {
                             progress_msg
                         );
                     }
-	                break;
-	            case "[ffmpeg]":
-	            	if(status != DownloadStatus.CONVERTING) {
-	            		status = DownloadStatus.CONVERTING;
-	            	}
-	            	break;
+                    break;
+                case "[ffmpeg]":
+                    if(status != DownloadStatus.CONVERTING) {
+                        status = DownloadStatus.CONVERTING;
+                    }
+                    break;
                 case "[youtube:channel]":
                     video_info_command.stop ();
                     status = DownloadStatus.ERROR;
@@ -217,5 +217,5 @@ namespace CopyPasteGrab {
                     break;
             }
         }
-	}
+    }
 }

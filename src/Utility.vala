@@ -21,18 +21,18 @@
 
 namespace CopyPasteGrab {
 
-	public GLib.File get_tmp_dir () {
-		GLib.File tmp = GLib.File.new_for_path (GLib.Environment.get_tmp_dir ());
-		GLib.File app_tmp = tmp.get_child ("com.github.cryptowyrm.copypastegrab");
-		if (!GLib.FileUtils.test (app_tmp.get_path (), GLib.FileTest.IS_DIR)) {
-			try {
-				app_tmp.make_directory ();
-			} catch (Error e) {
-				print ("Error creating tmp dir: %s\n", e.message);
-			}
-		}
+    public GLib.File get_tmp_dir () {
+        GLib.File tmp = GLib.File.new_for_path (GLib.Environment.get_tmp_dir ());
+        GLib.File app_tmp = tmp.get_child ("com.github.cryptowyrm.copypastegrab");
+        if (!GLib.FileUtils.test (app_tmp.get_path (), GLib.FileTest.IS_DIR)) {
+            try {
+                app_tmp.make_directory ();
+            } catch (Error e) {
+                print ("Error creating tmp dir: %s\n", e.message);
+            }
+        }
 
-		return app_tmp;
-	}
+        return app_tmp;
+    }
 
 }
