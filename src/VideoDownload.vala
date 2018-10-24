@@ -207,6 +207,11 @@ namespace CopyPasteGrab {
 	            		status = DownloadStatus.CONVERTING;
 	            	}
 	            	break;
+                case "[youtube:channel]":
+                    video_info_command.stop ();
+                    status = DownloadStatus.ERROR;
+                    error ("Downloading channels isn't implemented yet");
+                    break;
             }
         }
 	}
