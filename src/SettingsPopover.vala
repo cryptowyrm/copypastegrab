@@ -25,6 +25,7 @@ namespace CopyPasteGrab {
         Gtk.Grid settings_layout;
         Gtk.Label video_path_label;
         public Gtk.FileChooserButton video_path_url;
+        public string video_path_url_filename { get; set; }
 
         public SettingsPopover () {
             settings_layout = new Gtk.Grid ();
@@ -36,8 +37,6 @@ namespace CopyPasteGrab {
             video_path_url = new Gtk.FileChooserButton (
                 "Select a folder where videos should be downloaded to",
                 Gtk.FileChooserAction.SELECT_FOLDER);
-            //video_path_url.add_shortcut_folder (GLib.Environment.get_user_special_dir (GLib.UserDirectory.VIDEOS));
-            video_path_url.select_filename (GLib.Environment.get_user_special_dir (GLib.UserDirectory.VIDEOS));
 
             settings_layout.attach (video_path_label, 0, 0, 2, 1);
             settings_layout.attach (video_path_url, 0, 1, 2, 1);
@@ -47,7 +46,12 @@ namespace CopyPasteGrab {
             this.add (settings_layout);
 
             video_path_url.selection_changed.connect(() => {
-                print (video_path_url.get_filename ());
+                this.video_path_url_filename = video_path_url.get_filename ();
+            });
+
+            this.notify["video-path-url-filename"].connect (() => {
+                if (video_path_url.get_filename () != video_path_url_filename)
+                    video_path_url.select_filename (video_path_url_filename);
             });
         }
 

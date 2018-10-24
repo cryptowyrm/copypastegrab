@@ -93,28 +93,6 @@ namespace CopyPasteGrab {
                 parse_json (this.video.json);
                 video_info (this.video);
 
-                video_download_command = new ShellCommand (
-                    GLib.Environment.get_user_special_dir (GLib.UserDirectory.VIDEOS),
-                    {
-                        "youtube-dl",
-                        "--newline",
-                        "--no-playlist",
-                        "--load-info-json",
-                        this.video.json,
-                        video_url
-                    }
-                );
-
-                video_download_command.stdout.connect ((line) => {
-                    parse_line (line);
-                });
-
-                video_download_command.done.connect (() => {
-                    if (status != DownloadStatus.PAUSED) {
-                        status = DownloadStatus.DONE;
-                    }
-                });
-
                 status = DownloadStatus.READY;
             });
         }
@@ -129,6 +107,28 @@ namespace CopyPasteGrab {
         }
 
         public void start_download () {
+            video_download_command = new ShellCommand (
+                MyApp.settings.get_string ("video-download-path"),
+                {
+                    "youtube-dl",
+                    "--newline",
+                    "--no-playlist",
+                    "--load-info-json",
+                    this.video.json,
+                    this.video.url
+                }
+            );
+
+            video_download_command.stdout.connect ((line) => {
+                parse_line (line);
+            });
+
+            video_download_command.done.connect (() => {
+                if (status != DownloadStatus.PAUSED) {
+                    status = DownloadStatus.DONE;
+                }
+            });
+
             video_download_command.start ();
         }
 

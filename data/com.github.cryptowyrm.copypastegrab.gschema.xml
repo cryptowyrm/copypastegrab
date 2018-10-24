@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema path="/com/github/cryptowyrm/copypastegrab/" id="com.github.cryptowyrm.copypastegrab">
+    <key name="video-download-path" type="s">
+      <default>""</default>
+      <summary>Where to store downloaded videos</summary>
+      <description>Where to store downloaded videos</description>
+    </key>
+  </schema>
+</schemalist>

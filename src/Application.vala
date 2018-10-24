@@ -45,7 +45,8 @@ namespace CopyPasteGrab {
 
         Granite.Widgets.AlertView list_placeholder;
 
-        List<DownloadRow> downloads;        
+        List<DownloadRow> downloads;
+        public static GLib.Settings settings;
 
         public MyApp () {
             Object (
@@ -167,6 +168,15 @@ namespace CopyPasteGrab {
             layout.add (scrolled);
 
             main_window.add (layout);
+
+            // load and apply settings for video download path
+            settings = new GLib.Settings ("com.github.cryptowyrm.copypastegrab");
+            string video_download_path = settings.get_string ("video-download-path");
+            if (video_download_path.length == 0) {
+                video_download_path = GLib.Environment.get_user_special_dir (GLib.UserDirectory.VIDEOS);
+            }
+            MyApp.settings.set_string ("video-download-path", video_download_path);
+            MyApp.settings.bind ("video-download-path", settings_popover, "video_path_url_filename", GLib.SettingsBindFlags.DEFAULT);
 
             infobar.response.connect ((response_id) => {
                 if (response_id == Gtk.ResponseType.CLOSE) {
