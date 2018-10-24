@@ -48,6 +48,7 @@ namespace CopyPasteGrab {
 			progress_bar.show_text = true;
 			progress_bar.visible = false;
 			progress_bar.no_show_all = true;
+			progress_bar.ellipsize = Pango.EllipsizeMode.END;
 
 	        url_label = new Gtk.Label (video_url);
 	        url_label.tooltip_text = video_url;
