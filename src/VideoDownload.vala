@@ -58,6 +58,7 @@ namespace CopyPasteGrab {
                     "--newline",
                     "--write-thumbnail",
                     "--write-info-json",
+                    "--no-playlist",
                     "--skip-download",
                     video_url
                 }
@@ -96,6 +97,7 @@ namespace CopyPasteGrab {
                     {
                         "youtube-dl",
                         "--newline",
+                        "--no-playlist",
                         "--load-info-json",
                         this.video.json,
                         video_url
