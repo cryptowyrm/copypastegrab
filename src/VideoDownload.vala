@@ -32,7 +32,7 @@ namespace CopyPasteGrab {
 	}
 
 	public class VideoDownload : Object {
-        public signal void progress (double value);
+        public signal void progress (double value, string msg);
         public signal void video_info (VideoInfo info);
         public signal void error (string msg);
 
@@ -191,8 +191,13 @@ namespace CopyPasteGrab {
 	            	}
 	                
                     double progress_value = double.parse(line.slice(line.index_of(" "), line.index_of("%")).strip());
+                    string progress_msg = line.substring (line.index_of (" "));
+
                     if (progress_value >= 0.0) {
-                        progress (progress_value);
+                        progress (
+                            progress_value,
+                            progress_msg
+                        );
                     }
 	                break;
 	            case "[ffmpeg]":

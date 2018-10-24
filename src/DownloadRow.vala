@@ -117,8 +117,9 @@ namespace CopyPasteGrab {
 	        	}
 	        });
 
-	        this.video_download.progress.connect ((progress) => {
+	        this.video_download.progress.connect ((progress, msg) => {
 	        	progress_bar.set_fraction (progress / 100.0);
+	        	progress_bar.text = "Downloading: " + msg;
 	        });
 
 	        this.video_download.video_info.connect ((info) => {
