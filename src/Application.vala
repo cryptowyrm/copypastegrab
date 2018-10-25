@@ -43,7 +43,7 @@ namespace CopyPasteGrab {
         Gtk.MenuButton settings_button;
         SettingsPopover settings_popover;
 
-        Granite.Widgets.AlertView list_placeholder;
+        Granite.Widgets.Welcome list_placeholder;
 
         List<DownloadRow> downloads;
         public static GLib.Settings settings;
@@ -140,8 +140,8 @@ namespace CopyPasteGrab {
 
             var main_window = new Gtk.ApplicationWindow (this);
             main_window.set_titlebar (header);
-            main_window.default_height = 300;
-            main_window.default_width = 600;
+            main_window.default_height = 350;
+            main_window.default_width = 650;
             main_window.title = "Copy Paste Grab";
 
             var layout = new Gtk.Grid ();
@@ -151,11 +151,14 @@ namespace CopyPasteGrab {
             layout.border_width = 10;
             
             list_box = new Gtk.ListBox ();
-            list_placeholder = new Granite.Widgets.AlertView (
+            list_placeholder = new Granite.Widgets.Welcome (
                 "No downloads",
-                "Use the add url or paste url buttons in the header bar to add a new video download.",
-                "dialog-information"
+                "Add a few video URLs by using the two buttons in the top left and click the play button to start downloading them."
             );
+            list_placeholder.append ("insert-link", "Enter URL", "Enter a video URL to add it to the list of downloads.");
+            list_placeholder.append ("edit-paste", "Paste URL", "Paste a video URL from your clipboard to add it to the list of downloads.");
+            list_placeholder.set_item_sensitivity (0, false);
+            list_placeholder.set_item_sensitivity (1, false);
             list_box.set_placeholder (list_placeholder);
             list_placeholder.show_all();
 
