@@ -140,8 +140,8 @@ namespace CopyPasteGrab {
 
             var main_window = new Gtk.ApplicationWindow (this);
             main_window.set_titlebar (header);
-            main_window.default_height = 250;
-            main_window.default_width = 500;
+            main_window.default_height = 300;
+            main_window.default_width = 600;
             main_window.title = "Copy Paste Grab";
 
             var layout = new Gtk.Grid ();
