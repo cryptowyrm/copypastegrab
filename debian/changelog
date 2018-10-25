@@ -1,6 +1,5 @@
-com.github.cryptowyrm.copypastegrab (0.1ubuntu1) UNRELEASED; urgency=low
+com.github.cryptowyrm.copypastegrab (1.0.0) bionic; urgency=medium
 
-  [ CryptoWyrm ]
   * Initial Release.
 
- -- CryptoWyrm <cryptowyrm@protonmail.ch>  Thu, 11 Oct 2018 15:10:08 +0200
+ -- CryptoWyrm <cryptowyrm@protonmail.ch>  Thu, 25 Oct 2018 21:57:33 +0200
