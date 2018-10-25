@@ -1,5 +1,7 @@
 # Copy Paste Grab
 
+[![Build Status](https://travis-ci.com/cryptowyrm/copypastegrab.svg?branch=master)](https://travis-ci.com/cryptowyrm/copypastegrab)
+
 An [elementary OS](https://elementary.io/) app written in [Vala](https://wiki.gnome.org/Projects/Vala) that provides a GUI frontend for the popular [youtube-dl](https://github.com/rg3/youtube-dl/) command line application to easily download videos from [hundreds of websites](https://rg3.github.io/youtube-dl/supportedsites.html).
 
 ![Screenshot](https://i.imgur.com/dn98Oio.png)
