@@ -6,7 +6,10 @@ Build-Depends: debhelper (>= 10.5.1),
                gettext,
                libgtk-3-dev,
                meson,
-               valac (>= 0.28.0)
+               valac (>= 0.28.0),
+               libgranite-dev (>= 0.5),
+               libjson-glib-dev,
+               libglib2.0-dev
 Standards-Version: 4.1.1
 
 Package: com.github.cryptowyrm.copypastegrab
