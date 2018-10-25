@@ -50,7 +50,7 @@
   <url type="bugtracker">https://github.com/cryptowyrm/copypastegrab/issues</url>
   <url type="help">https://github.com/cryptowyrm/copypastegrab</url>
   <custom>
-    <value key="x-appcenter-color-primary">#603461</value>
+    <value key="x-appcenter-color-primary">#8359ac</value>
     <value key="x-appcenter-color-primary-text">rgb(255, 255, 255)</value>
     <value key="x-appcenter-suggested-price">3</value>
   </custom>
