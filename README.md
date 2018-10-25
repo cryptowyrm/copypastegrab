@@ -31,7 +31,7 @@ Then do:
 ```
 git clone https://github.com/cryptowyrm/copypastegrab.git
 cd copypastegrab
-meson build
+meson build --prefix=/usr
 cd build
 ninja
 sudo ninja install
