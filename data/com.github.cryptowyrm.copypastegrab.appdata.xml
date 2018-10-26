@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2018 CryptoWyrm <cryptowyrm@protonmail.ch> -->
+<!-- Copyright 2018 Christoph Budzinski <cryptowyrm@protonmail.ch> -->
 <component type="desktop">
   <id>com.github.cryptowyrm.copypastegrab</id>
   <metadata_license>CC0</metadata_license>
@@ -7,8 +7,8 @@
   <name>Copy Paste Grab</name>
   <summary>Download videos from hundreds of websites</summary>
   <description>
-    <p>Copy Paste Grab is a graphical user interface for the popular youtube-dl command line tool.</p>
-    <p>It allows you to download videos from hundreds of websites, either one at a time or multiple videos at the same time to make full use of your high speed internet connection.</p>
+    <p>A graphical user interface for the popular youtube-dl command line tool that allows you to easily download videos from hundreds of websites.</p>
+    <p>Just copy a link to a video, paste it into the app and it's going to grab it for you!</p>
   </description>
   <screenshots>
 ​    <screenshot type="default">
