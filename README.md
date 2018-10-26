@@ -6,11 +6,7 @@ An [elementary OS](https://elementary.io/) app written in [Vala](https://wiki.gn
 
 ![Screenshot](https://i.imgur.com/dn98Oio.png)
 
-## Work in progress
-
-The application should work for the most part but there are still a few features that need to be implemented and a few rough edges that need to be ironed out before release on the elementary OS App Center.
-
-## How to install
+## How to hack on the code
 
 **These instructions are for elementary OS 5 Juno.**
 
@@ -34,9 +30,6 @@ cd copypastegrab
 meson build --prefix=/usr
 cd build
 ninja
-sudo ninja install
 ```
 
-## How to hack on the code
-
-After following the above steps, just execute `ninja` in the build directory after you make changes to recompile, then start the app with `./com.github.cryptowyrm.copypastegrab` or do a `sudo ninja install` again and use the app launcher to start the app.
+After following the above steps, just execute `ninja` in the build directory whenever you make changes to recompile, then start the app with `./com.github.cryptowyrm.copypastegrab` or do a `sudo ninja install` and use the app launcher to start the app.
