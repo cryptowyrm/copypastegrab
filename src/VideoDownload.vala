@@ -91,6 +91,11 @@ namespace CopyPasteGrab {
                 }
 
                 parse_json (this.video.json);
+
+                if (status == DownloadStatus.ERROR) {
+                    return;
+                }
+                
                 video_info (this.video);
 
                 status = DownloadStatus.READY;
@@ -150,6 +155,18 @@ namespace CopyPasteGrab {
                             string video_title = reader.get_string_value ();
                             print ("Video title: %s\n", video_title);
                             this.video.title = video_title;
+                            reader.end_member ();
+                        }
+                        break;
+                    case "is_live":
+                        if (reader.read_member ("is_live")) {
+                            bool is_live = reader.get_boolean_value ();
+                            if (is_live == true) {
+                                status = DownloadStatus.ERROR;
+                                error ("Downloading live streams isn't supported");
+                            }
+                            reader.end_member ();
+                            return;
                         }
                         break;
                 }
