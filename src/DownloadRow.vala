@@ -121,8 +121,10 @@ namespace CopyPasteGrab {
             });
 
             this.video_download.video_info.connect ((info) => {
-                File file = File.new_for_path (info.thumbnail);
-                thumbnail.set_from_file_async.begin (file, 100, 100, true);
+                if (info.thumbnail != null) {
+                    File file = File.new_for_path (info.thumbnail);
+                    thumbnail.set_from_file_async.begin (file, 100, 100, true);
+                }
                 title_label.label = info.title;
                 start_button.sensitive = true;
             });
