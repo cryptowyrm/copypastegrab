@@ -1,7 +1,7 @@
 Source: com.github.cryptowyrm.copypastegrab
 Section: x11
 Priority: extra
-Maintainer: CryptoWyrm <cryptowyrm@protonmail.ch>
+Maintainer: Christoph Budzinski <cryptowyrm@protonmail.ch>
 Build-Depends: debhelper (>= 10.5.1),
                gettext,
                libgtk-3-dev,

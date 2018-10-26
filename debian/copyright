@@ -3,7 +3,7 @@ Upstream-Name: copypastegrab
 Source: https://github.com/cryptowyrm/copypastegrab
 
 Files: src/* data/* debian/*
-Copyright: 2018 CryptoWyrm <cryptowyrm@protonmail.ch>
+Copyright: 2018 Christoph Budzinski <cryptowyrm@protonmail.ch>
 License: GPL-3.0+
 
 License: GPL-3.0+
