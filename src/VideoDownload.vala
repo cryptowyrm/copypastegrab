@@ -104,6 +104,7 @@ namespace CopyPasteGrab {
 
         public void stop() {
             status = DownloadStatus.PAUSED;
+            this.video.file_count = 0;
             video_download_command.stop ();
         }
 
@@ -143,6 +144,7 @@ namespace CopyPasteGrab {
                 parser.load_from_file (json_path);
             } catch (Error e) {
                 print ("Unable to parse data: %s\n", e.message);
+                return;
             }
 
             Json.Node node = parser.get_root ();
@@ -151,22 +153,39 @@ namespace CopyPasteGrab {
             foreach (string member in reader.list_members ()) {
                 switch (member) {
                     case "title":
-                        if (reader.read_member ("title")) {
+                        if (reader.read_member ("title") && !reader.get_null_value ()) {
                             string video_title = reader.get_string_value ();
-                            print ("Video title: %s\n", video_title);
+                            reader.end_member ();
                             this.video.title = video_title;
+                        } else {
                             reader.end_member ();
                         }
                         break;
                     case "is_live":
-                        if (reader.read_member ("is_live")) {
+                        if (reader.read_member ("is_live") && !reader.get_null_value ()) {
+   
                             bool is_live = reader.get_boolean_value ();
+                            reader.end_member ();
                             if (is_live == true) {
                                 status = DownloadStatus.ERROR;
                                 error ("Downloading live streams isn't supported");
+                                return;
                             }
+                        } else {
                             reader.end_member ();
-                            return;
+                        }
+                        break;
+                    case "format_id":
+                        if (reader.read_member ("format_id") && !reader.get_null_value ()) {
+                            string format_id = reader.get_string_value ();
+                            reader.end_member ();
+                            if (format_id != null) {
+                                if (format_id.index_of ("+") > -1) {
+                                    this.video.dual = true;
+                                }
+                            }
+                        } else {
+                            reader.end_member ();
                         }
                         break;
                 }
@@ -211,7 +230,14 @@ namespace CopyPasteGrab {
                     if(status != DownloadStatus.DOWNLOADING) {
                       status = DownloadStatus.DOWNLOADING;
                     }
-                    
+
+                    // dual video file merging
+                    if (line.index_of ("[download] Destination: ") > -1) {
+                        this.video.file_count += 1;
+                        print ("file_count: %d\n", this.video.file_count);
+                    }
+
+                    // progress
                     double progress_value = double.parse(line.slice(line.index_of(" "), line.index_of("%")).strip());
                     string progress_msg = line.substring (line.index_of (" "));
 

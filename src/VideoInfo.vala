@@ -26,6 +26,8 @@ namespace CopyPasteGrab {
         public string title { get; set; }
         public string? thumbnail { get; set; }
         public string json { get; set; }
+        public bool dual { get; set; default = false; }
+        public int file_count { get; set; default = 0; }
 
         public VideoInfo () {
 
