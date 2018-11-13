@@ -1,3 +1,9 @@
+com.github.cryptowyrm.copypastegrab (1.1.0) bionic; urgency=medium
+
+  * Improves progress message for videos with seperate audio and video streams
+
+ -- Christoph Budzinski <cryptowyrm@protonmail.ch>  Tue, 13 Nov 2018 01:42:15 +0100
+
 com.github.cryptowyrm.copypastegrab (1.0.0) bionic; urgency=medium
 
   * Initial Release.

@@ -7,8 +7,9 @@
   <name>Copy Paste Grab</name>
   <summary>Download videos from hundreds of websites</summary>
   <description>
-    <p>A graphical user interface for the popular youtube-dl command line tool that allows you to easily download videos from hundreds of websites.</p>
+    <p>Easily download videos from hundreds of websites.</p>
     <p>Just copy a link to a video, paste it into the app and it's going to grab it for you!</p>
+    <p><b>Note:</b> Not all video websites allow downloading videos, so make sure you only download from websites that explicitly allow downloading videos in their Terms of Service.</p>
   </description>
   <screenshots>
 ​    <screenshot type="default">
