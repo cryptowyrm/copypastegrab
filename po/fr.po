@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.cryptowyrm.copypastegrab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-25 11:01+0100\n"
+"POT-Creation-Date: 2019-03-25 11:30+0100\n"
 "PO-Revision-Date: 2019-03-25 11:01+0100\n"
 "Last-Translator: NathanBnm\n"
 "Language-Team: Français\n"
@@ -58,7 +58,8 @@ msgid ""
 "Add a few video URLs by using the two buttons in the top left and click the "
 "play button to start downloading them."
 msgstr ""
-"Ajoutez quelques URL en utilisant les deux boutons en haut à gauche et cliquez sur le bouton de lecture pour démarrer le téléchargement"
+"Ajoutez quelques URL en utilisant les deux boutons en haut à gauche et "
+"cliquez sur le bouton de lecture pour démarrer le téléchargement"
 
 #: src/Application.vala:158
 msgid "Enter URL"
@@ -66,7 +67,8 @@ msgstr "Entrez un URL"
 
 #: src/Application.vala:158
 msgid "Enter a video URL to add it to the list of downloads."
-msgstr "Entrez l'URL d'une vidéo pour l'ajouter à la liste des téléchargements."
+msgstr ""
+"Entrez l'URL d'une vidéo pour l'ajouter à la liste des téléchargements."
 
 #: src/Application.vala:159
 msgid "Paste URL"
@@ -76,7 +78,8 @@ msgstr "Coller l'URL"
 msgid ""
 "Paste a video URL from your clipboard to add it to the list of downloads."
 msgstr ""
-"Collez une vidéo depuis votre presse-papiers pour l'ajouter à la liste des téléchargements."
+"Collez une vidéo depuis votre presse-papiers pour l'ajouter à la liste des "
+"téléchargements."
 
 #: src/Application.vala:207 src/Application.vala:237
 msgid "Not a valid URL"
@@ -108,4 +111,5 @@ msgstr "Les vidéos sont téléchargées vers"
 
 #: src/SettingsPopover.vala:38
 msgid "Select a folder where videos should be downloaded to"
-msgstr "Sélectionnez un dossier dans lequel les vidéos doivent être téléchargées"
+msgstr ""
+"Sélectionnez un dossier dans lequel les vidéos doivent être téléchargées"
