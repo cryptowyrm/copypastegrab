@@ -87,18 +87,18 @@ namespace CopyPasteGrab {
             download_all_button = new Gtk.Button ();
             download_all_button.relief = Gtk.ReliefStyle.NONE;
             download_all_button.set_image (download_all_icon);
-            download_all_button.tooltip_text = "Start all downloads";
+            download_all_button.tooltip_text = _("Start all downloads");
 
             clear_completed_button = new Gtk.Button ();
             clear_completed_button.relief = Gtk.ReliefStyle.NONE;
             clear_completed_button.set_image (clear_completed_icon);
-            clear_completed_button.tooltip_text = "Clear all completed downloads";
+            clear_completed_button.tooltip_text = _("Clear all completed downloads");
 
             add_url_button = new Gtk.MenuButton ();
             add_url_button.use_popover = true;
             add_url_button.relief = Gtk.ReliefStyle.NONE;
             add_url_button.set_image (add_url_icon);
-            add_url_button.tooltip_text = "Enter a video URL to download";
+            add_url_button.tooltip_text = _("Enter a video URL to download");
             add_url_popover = new Gtk.Popover (add_url_button);
             add_url_button.popover = add_url_popover;
 
@@ -106,18 +106,18 @@ namespace CopyPasteGrab {
             settings_button.use_popover = true;
             settings_button.relief = Gtk.ReliefStyle.NONE;
             settings_button.image = new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.LARGE_TOOLBAR);
-            settings_button.tooltip_text = "Settings";
+            settings_button.tooltip_text = _("Settings");
             settings_popover = new SettingsPopover ();
             settings_button.popover = settings_popover;
 
             paste_url_button = new Gtk.Button ();
             paste_url_button.relief = Gtk.ReliefStyle.NONE;
             paste_url_button.set_image (paste_url_icon);
-            paste_url_button.tooltip_text = "Paste video URL to download from the clipboard";
+            paste_url_button.tooltip_text = _("Paste video URL to download from the clipboard");
 
-            button = new Gtk.Button.with_label ("Add");
+            button = new Gtk.Button.with_label (_("Add"));
             entry = new Gtk.Entry ();
-            label = new Gtk.Label ("URL:");
+            label = new Gtk.Label (_("URL:"));
             var topbar = new Gtk.Grid ();
             topbar.orientation = Gtk.Orientation.HORIZONTAL;
             topbar.row_spacing = 10;
@@ -142,7 +142,7 @@ namespace CopyPasteGrab {
             main_window.set_titlebar (header);
             main_window.default_height = 350;
             main_window.default_width = 650;
-            main_window.title = "Copy Paste Grab";
+            main_window.title = _("Copy Paste Grab");
 
             var layout = new Gtk.Grid ();
             layout.orientation = Gtk.Orientation.VERTICAL;
@@ -152,11 +152,11 @@ namespace CopyPasteGrab {
             
             list_box = new Gtk.ListBox ();
             list_placeholder = new Granite.Widgets.Welcome (
-                "No downloads",
-                "Add a few video URLs by using the two buttons in the top left and click the play button to start downloading them."
+                _("No downloads"),
+                _("Add a few video URLs by using the two buttons in the top left and click the play button to start downloading them.")
             );
-            list_placeholder.append ("insert-link", "Enter URL", "Enter a video URL to add it to the list of downloads.");
-            list_placeholder.append ("edit-paste", "Paste URL", "Paste a video URL from your clipboard to add it to the list of downloads.");
+            list_placeholder.append ("insert-link", _("Enter URL"), _("Enter a video URL to add it to the list of downloads."));
+            list_placeholder.append ("edit-paste", _("Paste URL"), _("Paste a video URL from your clipboard to add it to the list of downloads."));
             list_placeholder.set_item_sensitivity (0, false);
             list_placeholder.set_item_sensitivity (1, false);
             list_box.set_placeholder (list_placeholder);
@@ -204,7 +204,7 @@ namespace CopyPasteGrab {
                     add_download (text);
                 } else {
                     infobar.message_type = Gtk.MessageType.WARNING;
-                    info_label.label = "Not a valid URL";
+                    info_label.label = _("Not a valid URL");
                     infobar.show ();
                 }
             });
@@ -234,7 +234,7 @@ namespace CopyPasteGrab {
                 entry.set_text ("");
             } else {
                 infobar.message_type = Gtk.MessageType.WARNING;
-                info_label.label = "Not a valid URL";
+                info_label.label = _("Not a valid URL");
                 infobar.show ();
             }
         }

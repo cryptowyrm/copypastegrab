@@ -1,0 +1,65 @@
+# Nepali translations for extra package.
+# Copyright (C) 2019 THE extra'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the extra package.
+# Automatically generated, 2019.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: extra\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-03-25 11:01+0100\n"
+"PO-Revision-Date: 2019-03-25 11:01+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ne\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; UTF-8=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/com.github.cryptowyrm.copypastegrab.appdata.xml.in:7
+#: data/com.github.cryptowyrm.copypastegrab.desktop.in:3
+msgid "Copy Paste Grab"
+msgstr ""
+
+#: data/com.github.cryptowyrm.copypastegrab.appdata.xml.in:8
+#: data/com.github.cryptowyrm.copypastegrab.desktop.in:5
+msgid "Download videos from hundreds of websites"
+msgstr ""
+
+#: data/com.github.cryptowyrm.copypastegrab.appdata.xml.in:10
+msgid "Easily download videos from hundreds of websites."
+msgstr ""
+
+#: data/com.github.cryptowyrm.copypastegrab.appdata.xml.in:11
+msgid ""
+"Just copy a link to a video, paste it into the app and it's going to grab it "
+"for you!"
+msgstr ""
+
+#: data/com.github.cryptowyrm.copypastegrab.appdata.xml.in:12
+msgid "Note:"
+msgstr ""
+
+#: data/com.github.cryptowyrm.copypastegrab.appdata.xml.in:16
+msgid "Downloading videos"
+msgstr ""
+
+#: data/com.github.cryptowyrm.copypastegrab.appdata.xml.in:20
+msgid "Settings and welcome message"
+msgstr ""
+
+#: data/com.github.cryptowyrm.copypastegrab.appdata.xml.in:24
+msgid "Christoph Budzinski"
+msgstr ""
+
+#: data/com.github.cryptowyrm.copypastegrab.desktop.in:4
+msgid "Video downloader"
+msgstr ""
+
+#: data/com.github.cryptowyrm.copypastegrab.desktop.in:8
+msgid "com.github.cryptowyrm.copypastegrab"
+msgstr ""
+
+#: data/com.github.cryptowyrm.copypastegrab.desktop.in:10
+msgid "Download;Video;"
+msgstr ""
