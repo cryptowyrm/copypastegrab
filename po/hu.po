@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.cryptowyrm.copypastegrab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-25 11:30+0100\n"
+"POT-Creation-Date: 2019-03-25 11:32+0100\n"
 "PO-Revision-Date: 2019-03-25 11:01+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -76,7 +76,7 @@ msgid ""
 "Paste a video URL from your clipboard to add it to the list of downloads."
 msgstr ""
 
-#: src/Application.vala:207 src/Application.vala:237
+#: src/Application.vala:207 src/Application.vala:237 src/VideoDownload.vala:78
 msgid "Not a valid URL"
 msgstr ""
 
@@ -106,4 +106,28 @@ msgstr ""
 
 #: src/SettingsPopover.vala:38
 msgid "Select a folder where videos should be downloaded to"
+msgstr ""
+
+#: src/VideoDownload.vala:75
+msgid "Unsupported website"
+msgstr ""
+
+#: src/VideoDownload.vala:171
+msgid "Downloading live streams isn't supported"
+msgstr ""
+
+#: src/VideoDownload.vala:201
+msgid "Writing thumbnail to: "
+msgstr ""
+
+#: src/VideoDownload.vala:212
+msgid "Writing video description metadata as JSON to: "
+msgstr ""
+
+#: src/VideoDownload.vala:259
+msgid "Downloading channels isn't implemented yet"
+msgstr ""
+
+#: src/VideoDownload.vala:265
+msgid "Downloading playlists isn't implemented yet"
 msgstr ""
