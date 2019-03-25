@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.cryptowyrm.copypastegrab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-25 11:32+0100\n"
+"POT-Creation-Date: 2019-03-25 12:45+0100\n"
 "PO-Revision-Date: 2019-03-25 11:01+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -84,12 +84,13 @@ msgstr ""
 msgid "Downloading video information…"
 msgstr ""
 
-#: src/DownloadRow.vala:103 src/DownloadRow.vala:157
-msgid "Downloading"
+#: src/DownloadRow.vala:103 src/DownloadRow.vala:123 src/DownloadRow.vala:125
+#: src/DownloadRow.vala:157
+msgid "Downloading…"
 msgstr ""
 
 #: src/DownloadRow.vala:106
-msgid "Converting"
+msgid "Converting…"
 msgstr ""
 
 #: src/DownloadRow.vala:109

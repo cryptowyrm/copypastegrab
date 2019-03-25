@@ -100,10 +100,10 @@ namespace CopyPasteGrab {
             this.video_download.notify["status"].connect((s, p) => {
                 switch (video_download.status) {
                     case DownloadStatus.DOWNLOADING:
-                        progress_bar.text = _("Downloading");
+                        progress_bar.text = _("Downloading…");
                         break;
                     case DownloadStatus.CONVERTING:
-                        progress_bar.text = _("Converting");
+                        progress_bar.text = _("Converting…");
                         break;
                     case DownloadStatus.PAUSED:
                         progress_bar.text = _("Stopped");
@@ -120,9 +120,9 @@ namespace CopyPasteGrab {
                 string progress_msg;
 
                 if (video_download.video.dual == true) {
-                    progress_msg = @"Downloading $(video_download.video.file_count)/2 $(msg)";
+                    progress_msg = @"" + _("Downloading…") + " $(video_download.video.file_count)/2 $(msg)";
                 } else {
-                    progress_msg = @"Downloading $(msg)";
+                    progress_msg = @"" + _("Downloading…") + " $(msg)";
                 }
 
                 progress_bar.text = progress_msg;
@@ -154,7 +154,7 @@ namespace CopyPasteGrab {
         }
 
         public void start() {
-            progress_bar.text = _("Downloading");
+            progress_bar.text = _("Downloading…");
             start_button.set_image (stop_icon);
             is_downloading = true;
             progress_bar.visible = true;

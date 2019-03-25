@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: com.github.cryptowyrm.copypastegrab\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-03-25 11:32+0100\n"
+"POT-Creation-Date: 2019-03-25 12:45+0100\n"
 "PO-Revision-Date: 2019-03-25 11:01+0100\n"
 "Last-Translator: NathanBnm\n"
 "Language-Team: Français\n"
@@ -59,7 +59,7 @@ msgid ""
 "play button to start downloading them."
 msgstr ""
 "Ajoutez quelques URL en utilisant les deux boutons en haut à gauche et "
-"cliquez sur le bouton de lecture pour démarrer le téléchargement"
+"cliquez sur le bouton de lecture pour démarrer le téléchargement."
 
 #: src/Application.vala:158
 msgid "Enter URL"
@@ -78,8 +78,7 @@ msgstr "Coller l'URL"
 msgid ""
 "Paste a video URL from your clipboard to add it to the list of downloads."
 msgstr ""
-"Collez une vidéo depuis votre presse-papiers pour l'ajouter à la liste des "
-"téléchargements."
+"Collez l'URL d'une vidéo pour l'ajouter à la liste des téléchargements."
 
 #: src/Application.vala:207 src/Application.vala:237 src/VideoDownload.vala:78
 msgid "Not a valid URL"
@@ -89,13 +88,14 @@ msgstr "L'URL n'est pas valide"
 msgid "Downloading video information…"
 msgstr "Téléchargement des informations sur la vidéo…"
 
-#: src/DownloadRow.vala:103 src/DownloadRow.vala:157
-msgid "Downloading"
-msgstr "Téléchargement"
+#: src/DownloadRow.vala:103 src/DownloadRow.vala:123 src/DownloadRow.vala:125
+#: src/DownloadRow.vala:157
+msgid "Downloading…"
+msgstr "Téléchargement…"
 
 #: src/DownloadRow.vala:106
-msgid "Converting"
-msgstr "Conversion"
+msgid "Converting…"
+msgstr "Conversion…"
 
 #: src/DownloadRow.vala:109
 msgid "Stopped"
