@@ -33,9 +33,9 @@ namespace CopyPasteGrab {
             settings_layout.column_spacing = 10;
             settings_layout.border_width = 10;
 
-            video_path_label = new Gtk.Label ("Videos are downloaded to");
+            video_path_label = new Gtk.Label (_("Videos are downloaded to"));
             video_path_url = new Gtk.FileChooserButton (
-                "Select a folder where videos should be downloaded to",
+                _("Select a folder where videos should be downloaded to"),
                 Gtk.FileChooserAction.SELECT_FOLDER);
 
             settings_layout.attach (video_path_label, 0, 0, 2, 1);

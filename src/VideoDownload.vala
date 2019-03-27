@@ -72,10 +72,10 @@ namespace CopyPasteGrab {
             video_info_command.stderr.connect ((line) => {
                 if (status != DownloadStatus.ERROR) {
                     if (line.index_of ("ERROR: Unsupported URL:") > -1) {
-                        error ("Unsupported website");
+                        error (_("Unsupported website"));
                         status = DownloadStatus.ERROR;
                     } else if (line.has_prefix ("ERROR:") && line.index_of ("is not a valid URL.") > -1) {
-                        error ("Not a valid URL");
+                        error (_("Not a valid URL"));
                         status = DownloadStatus.ERROR;
                     } else if (line.has_prefix ("ERROR:")) {
                         error (line);
@@ -168,7 +168,7 @@ namespace CopyPasteGrab {
                             reader.end_member ();
                             if (is_live == true) {
                                 status = DownloadStatus.ERROR;
-                                error ("Downloading live streams isn't supported");
+                                error (_("Downloading live streams isn't supported"));
                                 return;
                             }
                         } else {
@@ -198,7 +198,7 @@ namespace CopyPasteGrab {
             }
 
             // check if downloading thumbnail
-            string thumbnail_search = "Writing thumbnail to: ";
+            string thumbnail_search = _("Writing thumbnail to: ");
             int thumbnail_index = line.index_of (thumbnail_search);
             if(thumbnail_index > -1) {
                 string thumbnail_file = line.substring (thumbnail_index + thumbnail_search.length).strip ();
@@ -209,7 +209,7 @@ namespace CopyPasteGrab {
             }
 
             // check if downloading JSON
-            string json_search = "Writing video description metadata as JSON to: ";
+            string json_search = _("Writing video description metadata as JSON to: ");
             int json_index = line.index_of (json_search);
             if(json_index > -1) {
                 string json_file = line.substring (json_index + json_search.length).strip ();
@@ -256,13 +256,13 @@ namespace CopyPasteGrab {
                 case "[youtube:channel]":
                     video_info_command.stop ();
                     status = DownloadStatus.ERROR;
-                    error ("Downloading channels isn't implemented yet");
+                    error (_("Downloading channels isn't implemented yet"));
                     break;
                 case "[youtube:playlist]":
                     if (line.index_of ("Downloading just video") == -1) {
                         video_info_command.stop ();
                         status = DownloadStatus.ERROR;
-                        error ("Downloading playlists isn't implemented yet");
+                        error (_("Downloading playlists isn't implemented yet"));
                     }
                     break;
             }

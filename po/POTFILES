@@ -1,0 +1,4 @@
+src/Application.vala
+src/DownloadRow.vala
+src/SettingsPopover.vala
+src/VideoDownload.vala
